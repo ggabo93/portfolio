@@ -24,7 +24,7 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const BASE_URL = "https://gabrielgonzalez.dev";
+const BASE_URL = "https://portfolio-alpha-lyart-95.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
