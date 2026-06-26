@@ -1,5 +1,6 @@
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
+import { Cursor } from "@/components/layout/Cursor";
 import { Hero } from "@/components/sections/Hero";
 import { CurrentlyBuilding } from "@/components/sections/CurrentlyBuilding";
 import { Projects } from "@/components/sections/Projects";
@@ -24,6 +25,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <Cursor />
     </>
   );
 }
