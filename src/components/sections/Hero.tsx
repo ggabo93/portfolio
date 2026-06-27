@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const words = ["Construyo", "productos", "con IA."];
+const words = ["Convierto", "ideas en", "productos reales."];
 
 export function Hero() {
   return (
@@ -29,10 +29,10 @@ export function Hero() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 + i * 0.1 }}
               className="block"
             >
-              {word === "con IA." ? (
+              {word === "productos reales." ? (
                 <>
-                  con{" "}
-                  <span className="text-[#c8ff00]">IA.</span>
+                  productos{" "}
+                  <span className="text-[#c8ff00]">reales.</span>
                 </>
               ) : word}
             </motion.span>
