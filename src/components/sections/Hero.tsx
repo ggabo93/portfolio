@@ -16,7 +16,7 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="font-mono text-[11px] text-[#444] tracking-[0.2em] uppercase mb-12"
         >
-          Gabriel Gonzalez · Builder · Córdoba, ARG
+          Gabriel Gonzalez · Product Developer · Córdoba, ARG
         </motion.p>
 
         {/* Main statement */}
@@ -46,9 +46,9 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.65 }}
           className="text-lg text-[#555] leading-relaxed max-w-lg font-light"
         >
-          No código. Productos que resuelven problemas reales.{" "}
+          Uso IA para construir productos que resuelven problemas reales —{" "}
           <span className="text-[#888]">
-            De la idea al deploy en tiempo récord.
+            desde el diseño hasta la infraestructura.
           </span>
         </motion.p>
 
