@@ -44,7 +44,13 @@ export const timeline: TimelineEntry[] = [
     type: "learning",
   },
   {
-    date: "2025-01",
+    date: "2022",
+    title: "Full Stack Developer — Coderhouse",
+    description: "Carrera de desarrollo web full stack: HTML/CSS, JavaScript y React. Primer acercamiento serio al desarrollo frontend.",
+    type: "learning",
+  },
+  {
+    date: "2020",
     title: "Ingeniería en Informática",
     description: "2 años de fundamentos: algoritmos, arquitecturas, bases de datos. La base técnica que hace que todo lo demás tenga sentido.",
     type: "learning",

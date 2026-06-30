@@ -54,9 +54,6 @@ export function About() {
             <p className="font-sans text-[16px] text-[#4A4A45] leading-[1.78] font-light mb-5">
               Entregué cuatro apps en producción a clientes reales en Córdoba: una landing + panel admin para una fintech, un SaaS de gestión de préstamos, un sistema con bot de WhatsApp para una distribuidora, y un dashboard comercial. Todas con código real, decisiones documentadas y errores que aprendí en el camino.
             </p>
-            <p className="font-sans text-[16px] text-[#4A4A45] leading-[1.78] font-light">
-              No vendo humo: cada proyecto en este portfolio tiene su problema, su arquitectura y sus fallas reales. Eso es lo que sé hacer hoy, sin exagerar.
-            </p>
           </ScrollReveal>
         </div>
       </div>
