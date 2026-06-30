@@ -1,46 +1,45 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export function Contact() {
   return (
-    <section id="contact" className="py-section px-6 max-w-6xl mx-auto">
-      <div className="border border-[#1a1a1a] rounded-3xl p-12 md:p-20 bg-[#0c0c0c] text-center">
+    <section id="contact" className="py-section px-6 md:px-16 bg-[#1C1C1A] relative overflow-hidden">
+      {/* Watermark */}
+      <div
+        aria-hidden
+        className="hidden md:block absolute -bottom-20 -right-7 font-serif-italic select-none pointer-events-none text-[260px] font-light leading-none"
+        style={{ color: "#FAFAF8", opacity: 0.03 }}
+      >
+        Hola.
+      </div>
+
+      <div className="max-w-6xl mx-auto relative">
         <ScrollReveal>
-          <span className="font-mono text-[10px] text-[#333] tracking-[0.2em] uppercase block mb-8">
-            · disponible para proyectos ·
-          </span>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.1}>
-          <h2 className="font-serif-italic text-display-lg text-[#f2f2f2] mb-6 text-balance">
-            Hablemos de tu{" "}
-            <span className="text-[#c8ff00]">producto.</span>
+          <div className="font-mono text-[10px] tracking-[0.14em] text-[#5A5A57] uppercase mb-7">
+            Contacto
+          </div>
+          <h2 className="font-serif text-[clamp(40px,7vw,100px)] font-normal tracking-[-0.025em] text-[#FAFAF8] leading-[0.92] mb-11">
+            Construyamos<br />
+            <em className="font-serif-italic text-[#2D5A3D]">algo real.</em>
           </h2>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.2}>
-          <p className="text-[#444] text-base max-w-md mx-auto mb-12 leading-relaxed">
-            Si tenés una idea que necesita un producto — no un freelancer que escribe código — escribime.
+          <p className="font-sans text-[16px] text-[#8A8A85] font-light leading-[1.68] mb-12 max-w-[480px]">
+            Abierto a proyectos donde pueda aplicar como vibe coder full-stack — desde la idea hasta el deploy — y a puestos donde la velocidad de entrega y el criterio importan más que el CV.
           </p>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.3}>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-wrap gap-3">
             <a
               href="mailto:ggabo93@gmail.com"
-              className="font-mono text-sm text-[#080808] bg-[#c8ff00] px-8 py-3.5 rounded-xl hover:bg-[#d4ff30] transition-colors duration-200 font-500"
+              className="inline-flex items-center gap-2 bg-[#2D5A3D] text-[#FAFAF8] font-sans text-[13px] px-7 py-3.5 hover:bg-[#225239] transition-colors duration-200"
             >
-              ggabo93@gmail.com
+              ggabo93@gmail.com →
             </a>
             <a
               href="https://linkedin.com/in/gogabriel7"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-sm text-[#555] border border-[#1a1a1a] px-8 py-3.5 rounded-xl hover:border-[#2a2a2a] hover:text-[#888] transition-all duration-200"
+              className="inline-flex items-center gap-2 border border-[#3A3A38] text-[#8A8A85] font-sans text-[13px] px-7 py-3.5 hover:border-[#6B6B68] hover:text-[#D0CFCB] transition-all duration-200"
             >
-              LinkedIn →
+              LinkedIn
             </a>
           </div>
         </ScrollReveal>

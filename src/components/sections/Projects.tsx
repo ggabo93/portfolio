@@ -1,92 +1,113 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/lib/data/projects";
-import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { TechTag } from "@/components/ui/TechTag";
 
 export function Projects() {
-  const [featured, ...rest] = projects;
-
   return (
-    <section id="projects" className="py-section px-6 max-w-6xl mx-auto">
+    <section id="projects" className="py-section px-6 md:px-16 max-w-6xl mx-auto">
       <ScrollReveal>
-        <SectionLabel>Proyectos destacados</SectionLabel>
+        <div className="flex justify-between items-baseline mb-20 gap-6 flex-wrap">
+          <h2 className="font-serif text-[clamp(32px,5vw,64px)] font-normal tracking-[-0.02em] text-[#1C1C1A]">
+            Proyectos entregados
+          </h2>
+          <span className="font-mono text-[10px] tracking-[0.1em] text-[#8A8A85] uppercase">
+            {projects.length} proyectos · 2025–2026
+          </span>
+        </div>
       </ScrollReveal>
 
-      {/* Featured project — full width editorial */}
-      <ScrollReveal delay={0.1}>
-        <Link href={`/projects/${featured.slug}`} className="group block mb-2">
-          <div className="border border-[#1a1a1a] rounded-2xl p-8 md:p-12 hover:border-[#2a2a2a] transition-colors duration-300 bg-[#0c0c0c]">
-            <div className="flex items-start justify-between mb-8">
-              <span className="font-mono text-[10px] text-[#333] tracking-[0.2em]">
-                {featured.number}
-              </span>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-[#c8ff00] bg-[rgba(200,255,0,0.06)] border border-[rgba(200,255,0,0.12)] px-2.5 py-1 rounded-full">
-                  {featured.status === "production" ? "↗ producción" : featured.status}
-                </span>
+      <div className="space-y-0 divide-y divide-[#E5E4E0]">
+        {projects.map((project, i) => (
+          <ScrollReveal key={project.slug} delay={0.05 + i * 0.07}>
+            <Link href={`/projects/${project.slug}`} className="group block py-14">
+              <div className="flex flex-col md:flex-row gap-12">
+                {/* Left col */}
+                <div className="w-full md:w-[200px] flex-shrink-0">
+                  <div className="font-mono text-[10px] tracking-[0.14em] text-[#8A8A85] uppercase mb-3">
+                    {project.number}
+                  </div>
+                  <h3 className="font-serif text-[40px] font-normal text-[#1C1C1A] tracking-[-0.01em] leading-none mb-3 group-hover:text-[#2D5A3D] transition-colors duration-300">
+                    {project.name}
+                  </h3>
+                  {project.status === "production" && (
+                    <div className="inline-flex items-center gap-1.5 bg-[#EEF4F0] px-2.5 py-1.5">
+                      <div className="w-1.5 h-1.5 bg-[#2D5A3D] rounded-full" />
+                      <span className="font-mono text-[10px] text-[#2D5A3D] tracking-[0.06em] uppercase">
+                        Producción
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Center col */}
+                <div className="flex-1 min-w-0">
+                  <p className="font-sans text-[15px] text-[#4A4A45] leading-[1.74] font-light mb-8 max-w-xl">
+                    {project.problem}
+                  </p>
+                  <div className="grid grid-cols-3 gap-6 mb-8">
+                    {[
+                      { label: "Problema", content: project.problem.slice(0, 80) + "…" },
+                      { label: "Solución", content: project.idea.slice(0, 80) + "…" },
+                      { label: "Resultado", content: project.result.slice(0, 80) + "…" },
+                    ].map(({ label, content }) => (
+                      <div key={label}>
+                        <div className="font-mono text-[10px] tracking-[0.1em] text-[#8A8A85] uppercase mb-2">
+                          {label}
+                        </div>
+                        <p className="font-sans text-[12.5px] text-[#6B6B66] leading-[1.68] font-light">
+                          {content}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.stack.map((t) => (
+                      <TechTag key={t} name={t} />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right col: metric strip */}
+                <div className="flex-shrink-0 flex flex-col gap-1 w-full md:w-auto">
+                  <div className="border border-[#E5E4E0] grid grid-cols-2 md:grid-cols-1 gap-px bg-[#E5E4E0]">
+                    <div className="bg-[#FAFAF8] px-5 py-4">
+                      <div className="font-serif text-[28px] font-normal text-[#1C1C1A] leading-none">
+                        {project.hoursInvested}h
+                      </div>
+                      <div className="font-mono text-[9px] tracking-[0.08em] text-[#8A8A85] uppercase mt-1">
+                        Invertidas
+                      </div>
+                    </div>
+                    <div className="bg-[#FAFAF8] px-5 py-4">
+                      <div className="font-serif text-[28px] font-normal text-[#1C1C1A] leading-none">
+                        {project.stack.length}
+                      </div>
+                      <div className="font-mono text-[9px] tracking-[0.08em] text-[#8A8A85] uppercase mt-1">
+                        Tecnologías
+                      </div>
+                    </div>
+                    {project.url && (
+                      <div className="bg-[#FAFAF8] px-5 py-4 col-span-2 md:col-span-1">
+                        <div className="font-mono text-[10px] text-[#2D5A3D] truncate">
+                          ↗ {project.url.replace("https://", "")}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="flex justify-end mt-6">
                 <ArrowUpRight
-                  size={16}
-                  className="text-[#333] group-hover:text-[#c8ff00] transition-colors duration-200"
+                  size={18}
+                  className="text-[#C0BFBA] group-hover:text-[#2D5A3D] transition-colors duration-200"
                 />
               </div>
-            </div>
-
-            <h2 className="font-serif-italic text-display-md text-[#f2f2f2] mb-4 group-hover:text-[#c8ff00] transition-colors duration-300">
-              {featured.name}
-            </h2>
-
-            <p className="text-[#555] text-base leading-relaxed max-w-2xl mb-8">
-              {featured.problem}
-            </p>
-
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <div className="flex flex-wrap gap-2">
-                {featured.stack.slice(0, 4).map((t) => (
-                  <TechTag key={t} name={t} />
-                ))}
-              </div>
-              {featured.url && (
-                <span className="font-mono text-[11px] text-[#444] group-hover:text-[#888] transition-colors">
-                  {featured.url.replace("https://", "")}
-                </span>
-              )}
-            </div>
-          </div>
-        </Link>
-      </ScrollReveal>
-
-      {/* Asymmetric grid for the rest */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
-        {rest.map((project, i) => (
-          <ScrollReveal key={project.slug} delay={0.1 + i * 0.07} className={i === 0 ? "md:col-span-2" : ""}>
-            <Link href={`/projects/${project.slug}`} className="group block h-full">
-            <div className="group border border-[#1a1a1a] rounded-2xl p-7 hover:border-[#2a2a2a] transition-colors duration-300 bg-[#0c0c0c] h-full">
-              <div className="flex items-start justify-between mb-6">
-                <span className="font-mono text-[10px] text-[#2a2a2a] tracking-[0.2em]">
-                  {project.number}
-                </span>
-                <span className="font-mono text-[10px] text-[#333]">{project.category}</span>
-              </div>
-
-              <h3 className="font-sans text-lg font-600 text-[#e0e0e0] mb-3 group-hover:text-[#f2f2f2] transition-colors">
-                {project.name}
-              </h3>
-
-              <p className="text-[#444] text-sm leading-relaxed mb-6 line-clamp-3">
-                {project.tagline}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5">
-                {project.stack.slice(0, 3).map((t) => (
-                  <TechTag key={t} name={t} variant="muted" />
-                ))}
-              </div>
-            </div>
             </Link>
           </ScrollReveal>
         ))}

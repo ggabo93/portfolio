@@ -1,88 +1,78 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const words = ["Convierto", "ideas en", "productos reales."];
+import { currentProject } from "@/lib/data/projects";
 
 export function Hero() {
   return (
-    <section className="min-h-screen flex flex-col justify-center px-6 pt-20 pb-16 max-w-6xl mx-auto">
-      <div className="max-w-4xl">
+    <section id="hero" className="min-h-screen flex flex-col justify-end px-6 md:px-16 pt-24 pb-20 relative overflow-hidden">
 
-        {/* Eyebrow */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-mono text-[11px] text-[#444] tracking-[0.2em] uppercase mb-12"
+      {/* Watermark */}
+      <div
+        aria-hidden
+        className="hidden md:block absolute -right-6 top-1/2 -translate-y-1/2 font-serif-italic select-none pointer-events-none"
+        style={{ fontSize: "clamp(160px, 27vw, 400px)", fontWeight: 300, fontStyle: "normal", color: "#1C1C1A", opacity: 0.035, lineHeight: 1 }}
+      >
+        GG
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          className="font-mono text-[11px] tracking-[0.14em] text-[#8A8A85] uppercase mb-7"
         >
-          Gabriel Gonzalez · Product Developer · Córdoba, ARG
-        </motion.p>
+          Product Developer · Vibe Coding desde 2025
+        </motion.div>
 
-        {/* Main statement */}
-        <h1 className="text-display-xl font-serif-italic leading-[0.92] tracking-[-0.04em] text-[#f2f2f2] mb-8">
-          {words.map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 + i * 0.1 }}
-              className="block"
-            >
-              {word === "productos reales." ? (
-                <>
-                  productos{" "}
-                  <span className="text-[#c8ff00]">reales.</span>
-                </>
-              ) : word}
-            </motion.span>
-          ))}
+        <h1 className="font-serif text-[clamp(52px,11vw,158px)] font-normal leading-[0.92] tracking-[-0.025em] text-[#1C1C1A] mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.42 }}
+            className="block"
+          >
+            Gabriel
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
+            className="block font-serif-italic text-[#2D5A3D]"
+          >
+            González.
+          </motion.span>
         </h1>
 
-        {/* Sub */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.65 }}
-          className="text-lg text-[#555] leading-relaxed max-w-lg font-light"
-        >
-          Uso IA para construir productos que resuelven problemas reales —{" "}
-          <span className="text-[#888]">
-            desde el diseño hasta la infraestructura.
-          </span>
-        </motion.p>
-
-        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.85 }}
-          className="flex items-center gap-6 mt-14"
+          transition={{ duration: 0.8, delay: 0.92 }}
+          className="flex flex-col md:flex-row justify-between items-start md:items-end border-t border-[#E5E4E0] pt-7 gap-8"
         >
-          <a
-            href="#projects"
-            className="flex items-center gap-2 font-mono text-[11px] text-[#c8ff00] hover:opacity-70 transition-opacity"
-          >
-            <span>Ver proyectos</span>
-            <span>↓</span>
-          </a>
-          <a
-            href="mailto:ggabo93@gmail.com"
-            className="font-mono text-[11px] text-[#444] hover:text-[#888] transition-colors"
-          >
-            ggabo93@gmail.com
-          </a>
+          <p className="font-sans text-[clamp(15px,1.5vw,18px)] text-[#4A4A45] font-light max-w-[500px] leading-[1.68]">
+            Construyo productos reales usando IA como copiloto — desde la idea hasta el deploy en producción. Cuatro apps entregadas a clientes reales en Córdoba, Argentina.
+          </p>
+          <div className="text-left md:text-right flex-shrink-0">
+            <div className="font-mono text-[10px] tracking-[0.12em] text-[#8A8A85] uppercase mb-1.5">
+              Construyendo ahora
+            </div>
+            <div className="font-sans text-[15px] text-[#1C1C1A]">{currentProject.name}</div>
+            <div className="font-sans text-[14px] text-[#8A8A85] mt-0.5">Córdoba, Argentina</div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll hint */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 1.2 }}
-        className="absolute bottom-10 right-6 font-mono text-[10px] text-[#2a2a2a] tracking-widest uppercase rotate-90 origin-right"
+        transition={{ duration: 0.5, delay: 1.3 }}
+        className="hidden md:flex absolute bottom-9 left-16 items-center gap-3"
       >
-        scroll
+        <div className="w-9 h-px bg-[#D0CFC9]" />
+        <span className="font-mono text-[10px] tracking-[0.12em] text-[#A8A8A3] uppercase">Scroll</span>
       </motion.div>
     </section>
   );

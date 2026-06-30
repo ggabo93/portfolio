@@ -6,27 +6,27 @@
 /* ── Design tokens ── */
 @theme {
   /* Fonts — v4 naming: --font-{name} maps to font-{name} utility */
-  --font-sans:  var(--font-geist), system-ui, sans-serif;
-  --font-mono:  var(--font-geist-mono), monospace;
-  --font-serif: var(--font-instrument), Georgia, serif;
+  --font-sans:  var(--font-dmsans), system-ui, sans-serif;
+  --font-mono:  var(--font-jetbrains), monospace;
+  --font-serif: var(--font-cormorant), Georgia, serif;
 
   /* Display font sizes */
   --text-display-xl: clamp(3.5rem, 8vw, 7rem);
   --text-display-xl--line-height: 0.92;
-  --text-display-xl--letter-spacing: -0.04em;
+  --text-display-xl--letter-spacing: -0.025em;
 
   --text-display-lg: clamp(2.5rem, 5vw, 4.5rem);
   --text-display-lg--line-height: 1;
-  --text-display-lg--letter-spacing: -0.03em;
+  --text-display-lg--letter-spacing: -0.02em;
 
   --text-display-md: clamp(1.75rem, 3vw, 2.5rem);
   --text-display-md--line-height: 1.1;
-  --text-display-md--letter-spacing: -0.025em;
+  --text-display-md--letter-spacing: -0.015em;
 
   /* Brand colors */
-  --color-accent:          #c8ff00;
-  --color-accent-dim:      rgba(200,255,0,0.1);
-  --color-accent-border:   rgba(200,255,0,0.2);
+  --color-accent:          #2D5A3D;
+  --color-accent-dim:      rgba(45,90,61,0.08);
+  --color-accent-border:   rgba(45,90,61,0.2);
 
   /* Custom spacing */
   --spacing-section: clamp(5rem, 10vw, 10rem);
@@ -48,7 +48,7 @@
 
 /* ── Custom utilities ── */
 @utility font-serif-italic {
-  font-family: var(--font-instrument, Georgia, serif);
+  font-family: var(--font-cormorant, Georgia, serif);
   font-style: italic;
 }
 
@@ -57,13 +57,13 @@
 }
 
 @utility surface {
-  background: #111111;
-  border: 1px solid #242424;
+  background: #FFFFFF;
+  border: 1px solid #E5E4E0;
 }
 
 @utility surface-elevated {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background: #FFFFFF;
+  border: 1px solid #D5D4D0;
 }
 
 /* ── Base resets ── */
@@ -77,16 +77,21 @@
   }
 
   body {
-    background: #080808;
-    color: #f2f2f2;
+    background: #FAFAF8;
+    color: #1C1C1A;
+    cursor: none;
+  }
+
+  @media (pointer: coarse) {
+    body { cursor: auto; }
   }
 
   ::selection {
-    background: rgba(200,255,0,0.15);
-    color: #c8ff00;
+    background: #2D5A3D;
+    color: #FAFAF8;
   }
 
   ::-webkit-scrollbar       { width: 3px; }
-  ::-webkit-scrollbar-track { background: #080808; }
-  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+  ::-webkit-scrollbar-track { background: #FAFAF8; }
+  ::-webkit-scrollbar-thumb { background: #D5D4D0; border-radius: 2px; }
 }

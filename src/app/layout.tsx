@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+  variable: "--font-dmsans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: "400",
-  style: "italic",
   display: "swap",
 });
 
@@ -29,25 +29,25 @@ const BASE_URL = "https://portfolio-alpha-lyart-95.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Gabriel Gonzalez — Builder",
-    template: "%s · Gabriel Gonzalez",
+    default: "Gabriel González — Product Developer",
+    template: "%s · Gabriel González",
   },
   description:
-    "Construyo productos con IA. Full-stack developer especializado en vibe coding — de la idea al deploy en tiempo récord.",
+    "Construyo productos con IA. Vibe coder full-stack — de la idea al deploy en producción, con clientes reales.",
   keywords: ["vibe coding", "AI builder", "full-stack", "Next.js", "Supabase", "Córdoba Argentina"],
-  authors: [{ name: "Gabriel Gonzalez", url: BASE_URL }],
-  creator: "Gabriel Gonzalez",
+  authors: [{ name: "Gabriel González", url: BASE_URL }],
+  creator: "Gabriel González",
   openGraph: {
     type: "website",
     locale: "es_AR",
     url: BASE_URL,
-    siteName: "Gabriel Gonzalez",
-    title: "Gabriel Gonzalez — Builder",
+    siteName: "Gabriel González",
+    title: "Gabriel González — Product Developer",
     description: "Construyo productos con IA.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gabriel Gonzalez — Builder",
+    title: "Gabriel González — Product Developer",
     description: "Construyo productos con IA.",
   },
   robots: { index: true, follow: true },
@@ -55,11 +55,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es">
       <body
         className={`
-          ${geist.variable} ${geistMono.variable} ${instrumentSerif.variable}
-          font-sans antialiased bg-[#080808] text-[#f2f2f2] min-h-screen
+          ${cormorant.variable} ${dmSans.variable} ${jetbrainsMono.variable}
+          font-sans antialiased bg-[#FAFAF8] text-[#1C1C1A] min-h-screen
         `}
       >
         {children}

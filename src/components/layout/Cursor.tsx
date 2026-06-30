@@ -6,33 +6,43 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export function Cursor() {
   const dotX = useMotionValue(-100);
   const dotY = useMotionValue(-100);
+  const ringX = useMotionValue(-100);
+  const ringY = useMotionValue(-100);
 
-  const springX = useSpring(dotX, { stiffness: 600, damping: 35 });
-  const springY = useSpring(dotY, { stiffness: 600, damping: 35 });
+  const springRingX = useSpring(ringX, { stiffness: 280, damping: 30 });
+  const springRingY = useSpring(ringY, { stiffness: 280, damping: 30 });
 
-  const scale = useRef(1);
   const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
     const onMove = (e: MouseEvent) => {
       dotX.set(e.clientX);
       dotY.set(e.clientY);
+      ringX.set(e.clientX);
+      ringY.set(e.clientY);
     };
 
     const onEnter = () => {
       if (dotRef.current) {
-        dotRef.current.style.transform = `scale(5)`;
-        dotRef.current.style.background = "rgba(200,255,0,0.15)";
-        dotRef.current.style.border = "1px solid rgba(200,255,0,0.4)";
+        dotRef.current.style.width = "34px";
+        dotRef.current.style.height = "34px";
+        dotRef.current.style.background = "rgba(45,90,61,.1)";
+        dotRef.current.style.border = "1.5px solid #2D5A3D";
       }
+      if (ringRef.current) ringRef.current.style.opacity = "0";
     };
 
     const onLeave = () => {
       if (dotRef.current) {
-        dotRef.current.style.transform = `scale(1)`;
-        dotRef.current.style.background = "#c8ff00";
+        dotRef.current.style.width = "6px";
+        dotRef.current.style.height = "6px";
+        dotRef.current.style.background = "#2D5A3D";
         dotRef.current.style.border = "none";
       }
+      if (ringRef.current) ringRef.current.style.opacity = "1";
     };
 
     window.addEventListener("mousemove", onMove);
@@ -50,22 +60,38 @@ export function Cursor() {
         el.removeEventListener("mouseleave", onLeave);
       });
     };
-  }, [dotX, dotY]);
+  }, [dotX, dotY, ringX, ringY]);
 
   return (
-    <motion.div
-      ref={dotRef}
-      className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full"
-      style={{
-        x: springX,
-        y: springY,
-        translateX: "-50%",
-        translateY: "-50%",
-        width: "6px",
-        height: "6px",
-        background: "#c8ff00",
-        transition: "transform 0.2s ease, background 0.2s ease, border 0.2s ease",
-      }}
-    />
+    <div className="hidden md:block">
+      <motion.div
+        ref={dotRef}
+        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full"
+        style={{
+          x: dotX,
+          y: dotY,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: "6px",
+          height: "6px",
+          background: "#2D5A3D",
+          transition: "width .22s ease, height .22s ease, background .2s ease, border .18s ease",
+        }}
+      />
+      <motion.div
+        ref={ringRef}
+        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full"
+        style={{
+          x: springRingX,
+          y: springRingY,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: "30px",
+          height: "30px",
+          border: "1.5px solid rgba(45,90,61,.3)",
+          transition: "opacity .2s",
+        }}
+      />
+    </div>
   );
 }
