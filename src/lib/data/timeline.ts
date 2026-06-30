@@ -20,12 +20,6 @@ export const timeline: TimelineEntry[] = [
     type: "project",
   },
   {
-    date: "2026-03",
-    title: "Adopción de Claude Code",
-    description: "Empiezo a usar Claude Code como par de trabajo, no solo como asistente. Cambio de paradigma total.",
-    type: "tool",
-  },
-  {
     date: "2026-02",
     title: "Primer SaaS real",
     description: "Préstamos Admin en producción. Multi-módulo, auth por roles, wizard multi-paso.",
@@ -36,6 +30,12 @@ export const timeline: TimelineEntry[] = [
     title: "Vibe coding como método",
     description: "Entiendo que el valor no es escribir código, es construir productos. La IA es el multiplicador.",
     type: "milestone",
+  },
+  {
+    date: "2026-01",
+    title: "Adopción de Claude Code",
+    description: "Empiezo a usar Claude Code como par de trabajo, no solo como asistente. Cambio de paradigma total.",
+    type: "tool",
   },
   {
     date: "2025-09",
