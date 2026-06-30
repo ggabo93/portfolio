@@ -9,13 +9,13 @@ export const projects: Project[] = [
     category: "fintech",
     status: "production",
     problem:
-      "Una financiera de Córdoba necesitaba capturar leads online y gestionar sus solicitudes de préstamo sin depender de planillas de Excel y WhatsApps manuales.",
+      "Una financiera de Córdoba capturaba leads por WhatsApp manual y gestionaba solicitudes en una planilla de Excel sin estructura. Sin visibilidad del pipeline, los leads se perdían y no había forma de medir conversión.",
     idea:
-      "Un sitio que simula el préstamo en tiempo real y convierte el interés en un lead estructurado, más un panel admin premium que hace que el equipo gestione todo desde un solo lugar.",
+      "Landing que simula el préstamo en tiempo real y convierte el interés en un lead estructurado, más un panel admin con pipeline visual, actualización en tiempo real y exports para que el equipo opere desde un solo lugar.",
     result:
-      "Landing en producción en teciprestamos.com.ar. Panel admin con dashboard, KPIs, gráficos, Realtime, exports CSV/Excel/PDF, emails transaccionales automáticos y autenticación.",
+      "Sitio en producción en teciprestamos.com.ar. Panel admin con dashboard de KPIs, tabla de leads con Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales automáticos al equipo y al solicitante, rate limiting por IP y autenticación segura. El equipo pasó de perder leads en WhatsApp a tener visibilidad completa del pipeline.",
     whatIWouldImprove:
-      "Agregar un CMS headless para que el cliente edite las tasas sin código. Implementar WhatsApp Business API para automatizar el seguimiento.",
+      "Agregar un CMS headless para que el cliente edite las tasas y condiciones sin necesidad de código. Implementar WhatsApp Business API oficial para automatizar el seguimiento post-solicitud. Conectar con un CRM externo para escalar el pipeline.",
     stack: ["Next.js", "TypeScript", "Supabase", "Resend", "Vercel", "Tailwind"],
     architecture: {
       description: "Next.js 16 App Router con Server Components puros en la landing y Client Components solo donde hay interactividad. Supabase como backend completo.",
@@ -46,7 +46,7 @@ export const projects: Project[] = [
       "Resend 403 porque usaba subdomain send.teciprestamos.com.ar en lugar del dominio raíz verificado.",
       "Supabase Realtime no actualizaba porque faltaba setAuth(session.access_token) antes de suscribir al canal.",
     ],
-    hoursInvested: 120,
+    hoursInvested: 60,
     url: "https://teciprestamos.com.ar",
     startedAt: "2026-05-01",
     shippedAt: "2026-06-01",
@@ -58,20 +58,20 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "prestamos-admin",
+    slug: "capitl",
     number: "02",
-    name: "Préstamos Admin",
-    tagline: "SaaS interno de gestión completa para una empresa de préstamos.",
+    name: "Capitl",
+    tagline: "SaaS interno de gestión de préstamos, cobranza y caja para una financiera.",
     category: "saas",
     status: "production",
     problem:
-      "Una empresa de préstamos manejaba clientes, cuotas, cobranza y caja con planillas. Cuando el volumen creció, perdían pagos y la caja no cerraba.",
+      "La operación completa —clientes, préstamos, cuotas, mora, represtamistas y caja— se gestionaba en un Excel desestructurado. Sin fórmulas consistentes, sin historial confiable: cuando el volumen creció, los pagos se perdían, la caja no cerraba y calcular la mora era manual.",
     idea:
-      "Un sistema interno completo: alta de clientes, wizard de préstamos, seguimiento de cuotas, cobranza, caja diaria y gestión de represtamistas, todo en una sola pantalla.",
+      "Reemplazar el Excel por un SaaS interno con módulos dedicados: alta de clientes, wizard de préstamos multi-paso, seguimiento de cuotas con mora automática, cobranza, caja diaria multi-moneda ARS/USD y gestión de represtamistas con comisiones separadas.",
     result:
-      "SaaS en producción. Módulos: clientes, préstamos, cobranza, cajas, transacciones, represtamistas, mi cuenta. Wizard multi-paso para nuevos préstamos con validación completa.",
+      "Sistema en producción con 7 módulos completos. El cálculo de mora, las comisiones de represtamistas y el balance de caja que antes tomaban horas de trabajo manual en Excel ahora son automáticos e instantáneos. La operación pasó de un Excel compartido a un sistema con roles, historial y trazabilidad completa.",
     whatIWouldImprove:
-      "Agregar notificaciones push para cobranzas vencidas. Exportar reportes de caja por período. Dashboard con tendencia de mora.",
+      "Agregar notificaciones push para cobranzas vencidas sin necesidad de ingresar al sistema. Exportar reportes de caja por período para contabilidad. Dashboard con curva de mora histórica y proyección de cartera.",
     stack: ["Next.js", "TypeScript", "Supabase", "Shadcn/ui", "Zod", "TanStack Table", "Tailwind"],
     architecture: {
       description: "Next.js App Router con autenticación por rol. Shadcn/ui para los componentes de form. TanStack Table para las tablas con sorting/filtering del lado del cliente.",
@@ -93,7 +93,7 @@ export const projects: Project[] = [
     errors: [
       "El campo whatsapp era integer en Supabase. Los números argentinos (con código de área) superaban el límite. Fix: cambiar a text + validar longitud en el frontend.",
     ],
-    hoursInvested: 80,
+    hoursInvested: 100,
     startedAt: "2026-04-01",
     shippedAt: "2026-05-01",
   },
@@ -101,26 +101,27 @@ export const projects: Project[] = [
     slug: "celestina",
     number: "03",
     name: "Celestina",
-    tagline: "Sistema de gestión + bot de WhatsApp para una distribuidora.",
+    tagline: "APP de gestión + bot de WhatsApp para una distribuidora de agua.",
     category: "gestión",
     status: "production",
     problem:
-      "Una distribuidora manejaba repartos, caja y comisiones en papel. Las cobranzas vencidas pasaban desapercibidas y los clientes sin actividad se perdían.",
+      "Una distribuidora de agua gestionaba repartos, cuentas de clientes, inventario, caja y comisiones de repartidores en un Excel desestructurado. Sin automatización: los clientes inactivos se perdían silenciosamente y las deudas vencidas se descubrían tarde o nunca.",
     idea:
-      "App de gestión interna + un bot de WhatsApp que envía mensajes automáticos: seguimiento a clientes sin consumo en 14 días y alertas de deuda vencida.",
+      "App web mobile-first con dos módulos diferenciados: panel administrativo completo para el dueño (clientes, almacén, caja, comisiones e historial) y vista de reparto para el repartidor (ruta del día, confirmación de entregas y registro de pagos). Más un bot de WhatsApp que corre automáticamente: avisa a clientes sin consumo en 14 días y recuerda deudas vencidas.",
     result:
-      "App React en producción con módulos de almacén, caja, comisiones, clientes y repartos. Bot deployado en Render con Docker que corre cron jobs diarios.",
+      "App en producción con roles diferenciados. El administrador opera desde el panel con visibilidad total de la operación; el repartidor accede solo a su vista de ruta desde el celular. El bot de WhatsApp corre diariamente en Render con Docker y reemplazó el seguimiento manual. Las cobranzas vencidas y el seguimiento de clientes inactivos que antes dependían de revisar el Excel hoy son automáticos.",
     whatIWouldImprove:
-      "Migrar el bot a WhatsApp Business API oficial para evitar el riesgo de ban. Agregar dashboard de métricas de cobranza.",
+      "Migrar el bot a WhatsApp Business API oficial para eliminar el riesgo de ban. Agregar geotracking en tiempo real para seguimiento de rutas. Convertir la app en una aplicación nativa (React Native) para mejor experiencia del repartidor en campo. Dashboard de métricas de cobranza y eficiencia de rutas.",
     stack: ["React", "Vite", "Supabase", "Node.js", "Docker", "Render"],
     architecture: {
-      description: "Frontend React SPA + bot Node.js completamente independiente. Ambos conectados a la misma instancia de Supabase.",
+      description: "Frontend React SPA con dos vistas por rol + bot Node.js completamente independiente. Ambos conectados a la misma instancia de Supabase.",
       layers: [
-        { name: "Frontend", detail: "React + Vite SPA. Supabase JS client directo." },
-        { name: "Bot", detail: "Node.js con whatsapp-web.js + Puppeteer. Express dummy server para que Render no lo mate." },
-        { name: "Cron", detail: "node-cron: checkNotificaciones() todos los días a las 10:00 AM." },
-        { name: "Anti-ban", detail: "Delays aleatorios entre 65s y 150s entre mensajes. Nunca dos en el mismo minuto." },
-        { name: "Persistencia", detail: "Docker volume en Render para persistir la sesión de WhatsApp entre reinicios." },
+        { name: "Panel Admin", detail: "Vista completa: clientes, almacén, caja, comisiones e historial de repartos. Solo accesible para el rol admin." },
+        { name: "Vista Repartidor", detail: "Mobile-first: ruta del día, confirmación de entregas y registro de pagos. Acceso limitado por rol." },
+        { name: "Auth + Roles", detail: "Supabase Auth con RPC get_my_role(). El rol determina qué módulos ve cada usuario." },
+        { name: "Bot WhatsApp", detail: "Node.js con whatsapp-web.js + Puppeteer. Express dummy server para que Render no lo mate." },
+        { name: "Cron + Anti-ban", detail: "node-cron a las 10 AM. Delays aleatorios entre 65s y 150s entre mensajes para evitar bloqueos." },
+        { name: "Persistencia", detail: "Docker volume en Render para mantener la sesión de WhatsApp entre reinicios sin re-escanear QR." },
       ],
     },
     decisions: [

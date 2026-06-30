@@ -21,8 +21,8 @@ export const timeline: TimelineEntry[] = [
   },
   {
     date: "2026-02",
-    title: "Primer SaaS real",
-    description: "Préstamos Admin en producción. Multi-módulo, auth por roles, wizard multi-paso.",
+    title: "Capitl en producción",
+    description: "Primer SaaS interno real. Reemplazó un Excel desestructurado por un sistema multi-módulo con auth por roles, wizard de préstamos y cálculo automático de mora.",
     type: "project",
   },
   {
