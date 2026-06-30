@@ -46,7 +46,7 @@ export const timeline: TimelineEntry[] = [
   {
     date: "2022",
     title: "Full Stack Developer — Coderhouse",
-    description: "Carrera de desarrollo web full stack: HTML/CSS, JavaScript y React. Primer acercamiento serio al desarrollo frontend.",
+    description: "Carrera de desarrollo web full stack: HTML/CSS, JavaScript, React y Node.js. Primer acercamiento serio al desarrollo web completo.",
     type: "learning",
   },
   {
