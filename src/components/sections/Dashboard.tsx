@@ -15,9 +15,6 @@ export function Dashboard() {
           <h2 className="font-serif text-[clamp(32px,5vw,64px)] font-normal tracking-[-0.02em] text-[#1C1C1A] mb-3">
             En cifras.
           </h2>
-          <p className="font-mono text-[11px] text-[#A8A8A3] mb-12">
-            // datos estáticos · arquitectura lista para conectar a APIs reales
-          </p>
         </ScrollReveal>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#D5D4D0] border border-[#D5D4D0]">
