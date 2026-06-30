@@ -10,7 +10,7 @@ export const timeline: TimelineEntry[] = [
   {
     date: "2026-05",
     title: "TECI∞ en producción",
-    description: "Primera fintech entregada. Landing + panel admin completo. Aprendí Supabase Realtime y email transaccional.",
+    description: "Primera fintech entregada. Landing + panel admin completo. Incorporé Supabase Realtime (WebSockets con RLS) y emails transaccionales con Resend.",
     type: "project",
   },
   {
