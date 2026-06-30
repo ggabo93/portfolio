@@ -28,14 +28,7 @@ export const dashboardMetrics: DashboardMetric[] = [
     value: 1,
     size: "sm",
   },
-  {
-    id: "deploys",
-    label: "Deploys",
-    value: 50,
-    unit: "+",
-    size: "sm",
-  },
-  {
+{
     id: "hours",
     label: "Horas invertidas",
     value: 240,
