@@ -8,10 +8,10 @@ export function Contact() {
       {/* Watermark */}
       <div
         aria-hidden
-        className="hidden md:block absolute -bottom-20 -right-7 font-serif-italic select-none pointer-events-none text-[260px] font-light leading-none"
-        style={{ color: "#FAFAF8", opacity: 0.03 }}
+        className="hidden md:block absolute bottom-0 right-8 font-serif-italic select-none pointer-events-none leading-none"
+        style={{ fontSize: "clamp(140px, 22vw, 280px)", color: "#FAFAF8", opacity: 0.04 }}
       >
-        Hola.
+        GG
       </div>
 
       <div className="max-w-6xl mx-auto relative">
