@@ -14,14 +14,9 @@ export function About() {
     <section id="about" className="py-section px-6 md:px-16 max-w-6xl mx-auto">
       <div className="flex flex-col md:flex-row gap-16 md:gap-20">
 
-        {/* Left: avatar block + stats */}
-        <div className="w-full md:w-[280px] flex-shrink-0">
+        {/* Left: stats grid */}
+        <div className="w-full md:w-[260px] flex-shrink-0">
           <ScrollReveal>
-            <div className="border border-[#E5E4E0] aspect-[3/4] overflow-hidden mb-8 bg-[#F3F2EF] flex items-center justify-center">
-              <span className="font-mono text-[11px] text-[#A8A8A3] tracking-wide">Foto</span>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.08}>
             <div className="grid grid-cols-2 gap-6">
               {stats.map((s) => (
                 <div key={s.label}>
