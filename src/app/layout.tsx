@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { Cursor } from "@/components/layout/Cursor";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}
       >
         {children}
+        <Cursor />
       </body>
     </html>
   );
