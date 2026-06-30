@@ -26,16 +26,16 @@ export const timeline: TimelineEntry[] = [
     type: "project",
   },
   {
-    date: "2025-12",
-    title: "Vibe coding como método",
-    description: "Entiendo que el valor no es escribir código, es construir productos. La IA es el multiplicador.",
-    type: "milestone",
-  },
-  {
     date: "2026-01",
     title: "Adopción de Claude Code",
     description: "Empiezo a usar Claude Code como par de trabajo, no solo como asistente. Cambio de paradigma total.",
     type: "tool",
+  },
+  {
+    date: "2025-12",
+    title: "Vibe coding como método",
+    description: "Entiendo que el valor no es escribir código, es construir productos. La IA es el multiplicador.",
+    type: "milestone",
   },
   {
     date: "2025-09",

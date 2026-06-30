@@ -5,7 +5,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 const stats = [
   { value: "4", label: "Apps en producción" },
   { value: "4", label: "Clientes reales" },
-  { value: "280h", label: "Documentadas" },
+  { value: "240h", label: "Documentadas" },
   { value: "3", label: "Automatizaciones" },
 ];
 

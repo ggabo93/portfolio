@@ -16,17 +16,16 @@ export const dashboardMetrics: DashboardMetric[] = [
     // resolver: async () => { const { data } = await supabase.from('projects').select('count'); return data[0].count; }
   },
   {
-    id: "commits",
-    label: "Commits",
-    value: 500,
+    id: "modules",
+    label: "Módulos entregados",
+    value: 20,
     unit: "+",
     size: "md",
-    // resolver: async () => { const res = await fetch('https://api.github.com/users/ggabo93/events'); ... }
   },
   {
-    id: "repos",
-    label: "Repositorios",
-    value: 8,
+    id: "bots",
+    label: "Bots en producción",
+    value: 1,
     size: "sm",
   },
   {
@@ -39,7 +38,7 @@ export const dashboardMetrics: DashboardMetric[] = [
   {
     id: "hours",
     label: "Horas invertidas",
-    value: 280,
+    value: 240,
     unit: "h",
     size: "lg",
   },
@@ -56,9 +55,9 @@ export const dashboardMetrics: DashboardMetric[] = [
     size: "sm",
   },
   {
-    id: "apis",
-    label: "APIs integradas",
-    value: 7,
+    id: "services",
+    label: "Servicios en producción",
+    value: 5,
     size: "sm",
   },
 ];

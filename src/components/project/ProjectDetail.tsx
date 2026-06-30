@@ -32,26 +32,34 @@ export function ProjectDetail({ project }: Props) {
     <div className="min-h-screen bg-[#FAFAF8] text-[#1C1C1A]">
 
       {/* Back nav */}
-      <div className="sticky top-0 z-50 border-b border-[#E5E4E0] bg-[rgba(250,250,248,0.92)] backdrop-blur-md">
-        <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
+      <div className="sticky top-0 z-50 bg-[#1C1C1A]">
+        <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between relative">
           <Link
             href="/#projects"
-            className="flex items-center gap-2 font-mono text-[11px] text-[#8A8A85] hover:text-[#1C1C1A] transition-colors"
+            className="flex items-center gap-2 font-mono text-[11px] text-[#5A5A57] hover:text-[#FAFAF8] transition-colors"
           >
             <ArrowLeft size={13} />
-            Volver
+            Proyectos
           </Link>
+
+          {/* Project name centered */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
+            <span className="font-mono text-[10px] text-[#3A3A38] tracking-[0.15em]">{project.number}</span>
+            <span className="font-serif text-[15px] text-[#FAFAF8] tracking-[-0.01em]">{project.name}</span>
+          </div>
+
           <div className="flex items-center gap-4">
             {project.url && (
               <a href={project.url} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-[11px] text-[#8A8A85] hover:text-[#2D5A3D] transition-colors">
+                className="flex items-center gap-1.5 font-mono text-[11px] text-[#5A5A57] hover:text-[#2D5A3D] transition-colors">
                 <ExternalLink size={12} />
-                {project.url.replace("https://", "")}
+                <span className="hidden sm:inline">{project.url.replace("https://", "")}</span>
+                <span className="sm:hidden">ver sitio</span>
               </a>
             )}
             {project.repo && (
               <a href={project.repo} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-[11px] text-[#8A8A85] hover:text-[#1C1C1A] transition-colors">
+                className="flex items-center gap-1.5 font-mono text-[11px] text-[#5A5A57] hover:text-[#FAFAF8] transition-colors">
                 <GitBranch size={12} />
                 repo
               </a>
