@@ -29,6 +29,12 @@ export const projects: Project[] = [
     },
     decisions: [
       {
+        question: "¿Cómo trasladar la identidad visual del cliente al código?",
+        chosen: "Traducir el PDF de branding (paleta, tipografías, logo) provisto por un diseñador a design tokens reutilizables en Tailwind",
+        rejected: "Definir colores y fuentes a criterio propio",
+        reason: "El cliente ya había invertido en identidad visual — mi trabajo era implementarla con precisión, no reinventarla.",
+      },
+      {
         question: "¿Cómo hacer rate limiting en Vercel serverless?",
         chosen: "Contar rows por IP en Supabase en la última hora",
         rejected: "In-memory Map",
