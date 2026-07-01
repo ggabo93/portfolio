@@ -41,6 +41,14 @@ export function Projects() {
                       </span>
                     </div>
                   )}
+                  {project.status === "building" && (
+                    <div className="inline-flex items-center gap-1.5 bg-[#F3F0E5] px-2.5 py-1.5">
+                      <div className="w-1.5 h-1.5 bg-[#B8963E] rounded-full" />
+                      <span className="font-mono text-[10px] text-[#B8963E] tracking-[0.06em] uppercase">
+                        En desarrollo
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Center col */}

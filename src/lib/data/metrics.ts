@@ -11,7 +11,7 @@ export const dashboardMetrics: DashboardMetric[] = [
   {
     id: "apps",
     label: "Apps en producción",
-    value: 4,
+    value: 3,
     size: "md",
     // resolver: async () => { const { data } = await supabase.from('projects').select('count'); return data[0].count; }
   },

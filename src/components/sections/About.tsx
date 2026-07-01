@@ -3,7 +3,7 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 const stats = [
-  { value: "4", label: "Apps en producción" },
+  { value: "3", label: "Apps en producción" },
   { value: "4", label: "Clientes reales" },
   { value: "240h", label: "Documentadas" },
   { value: "3", label: "Automatizaciones" },
@@ -47,7 +47,7 @@ export function About() {
               Empecé Ingeniería en Informática y, en paralelo, una certificación en Data Analytics (Python, SQL, Power BI). Desde fines de 2025 uso esa base técnica junto con Claude Code como par de trabajo —no como autocompletado— para construir productos completos: frontend, backend, base de datos y deploy.
             </p>
             <p className="font-sans text-[16px] text-[#4A4A45] leading-[1.78] font-light mb-5">
-              Entregué cuatro apps en producción a clientes reales en Córdoba: una landing + panel admin para una fintech, un SaaS de gestión de préstamos, un sistema con bot de WhatsApp para una distribuidora, y un dashboard comercial. Todas con código real, decisiones documentadas y errores que aprendí en el camino.
+              Entregué tres apps en producción a clientes reales en Córdoba: una landing + panel admin para una fintech, un SaaS de gestión de préstamos y un sistema con bot de WhatsApp para una distribuidora. Además estoy construyendo un dashboard comercial para una empresa de frutos secos. Todas con código real, decisiones documentadas y errores que aprendí en el camino.
             </p>
           </ScrollReveal>
         </div>

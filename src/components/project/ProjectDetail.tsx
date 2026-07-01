@@ -85,6 +85,12 @@ export function ProjectDetail({ project }: Props) {
                 En producción
               </span>
             )}
+            {project.status === "building" && (
+              <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-[#B8963E] bg-[#F3F0E5] px-2.5 py-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B8963E]" />
+                En desarrollo
+              </span>
+            )}
             <span className="flex items-center gap-1.5 font-mono text-[10px] text-[#8A8A85]">
               <Clock size={10} />
               {project.hoursInvested}h invertidas
