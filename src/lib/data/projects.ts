@@ -9,11 +9,11 @@ export const projects: Project[] = [
     category: "fintech",
     status: "production",
     problem:
-      "Una financiera de Córdoba capturaba leads por WhatsApp manual y gestionaba solicitudes en una planilla de Excel sin estructura. Sin visibilidad del pipeline, los leads se perdían y no había forma de medir conversión.",
+      "Una financiera de Córdoba se lanzaba desde cero y no tenía ningún canal digital: sin landing, sin forma de capturar leads online ni de gestionar solicitudes más allá de WhatsApp informal. Necesitaban un sistema completo antes de operar.",
     idea:
-      "Landing que simula el préstamo en tiempo real y convierte el interés en un lead estructurado, más un panel admin con pipeline visual, actualización en tiempo real y exports para que el equipo opere desde un solo lugar.",
+      "Landing que simula el préstamo en tiempo real y convierte el interés en un lead estructurado, más un panel admin con pipeline visual, actualización en tiempo real y exports para que el equipo opere desde un solo lugar desde el día uno.",
     result:
-      "Sitio en producción en teciprestamos.com.ar. Panel admin con dashboard de KPIs, tabla de leads con Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales automáticos al equipo y al solicitante, rate limiting por IP y autenticación segura. El equipo pasó de perder leads en WhatsApp a tener visibilidad completa del pipeline.",
+      "Sitio en producción en teciprestamos.com.ar. Panel admin con dashboard de KPIs, tabla de leads con Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales automáticos al equipo y al solicitante, rate limiting por IP y autenticación segura. La financiera arrancó operando con visibilidad completa del pipeline en vez de depender de WhatsApp informal.",
     whatIWouldImprove:
       "Agregar un CMS headless para que el cliente edite las tasas y condiciones sin necesidad de código. Implementar WhatsApp Business API oficial para automatizar el seguimiento post-solicitud. Conectar con un CRM externo para escalar el pipeline.",
     stack: ["Next.js", "TypeScript", "Supabase", "Resend", "Vercel", "Tailwind"],
