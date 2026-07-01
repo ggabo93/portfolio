@@ -24,7 +24,7 @@ export function Contact() {
             <em className="font-serif-italic text-[#2D5A3D]">algo real.</em>
           </h2>
           <p className="font-sans text-[16px] text-[#8A8A85] font-light leading-[1.68] mb-12 max-w-[480px]">
-            Abierto a proyectos donde pueda aplicar como vibe coder full-stack — desde la idea hasta el deploy — y a puestos donde la velocidad de entrega y el criterio importan más que el CV.
+            Abierto a proyectos donde pueda aplicar como vibe coder full-stack — desde la idea hasta el deploy — y a equipos que necesitan alguien que entregue rápido sin resignar calidad de producto.
           </p>
           <div className="flex flex-wrap gap-3">
             <a
