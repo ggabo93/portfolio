@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export async function POST(request: Request) {
-  const { name, projectName, email, message } = await request.json();
+  const { name, projectName, email, message, company } = await request.json();
+
+  // Honeypot: campo oculto que solo un bot completaría.
+  if (company) {
+    return NextResponse.json({ ok: true });
+  }
 
   if (!name || !email || !message) {
     return NextResponse.json({ error: "Faltan campos requeridos." }, { status: 400 });
