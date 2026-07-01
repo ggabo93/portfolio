@@ -20,11 +20,11 @@ export function Contact() {
             Contacto
           </div>
           <h2 className="font-serif text-[clamp(40px,7vw,100px)] font-normal tracking-[-0.025em] text-[#FAFAF8] leading-[0.92] mb-11">
-            Construyamos<br />
-            <em className="font-serif-italic text-[#2D5A3D]">algo real.</em>
+            Trabajemos<br />
+            <em className="font-serif-italic text-[#2D5A3D]">juntos.</em>
           </h2>
           <p className="font-sans text-[16px] text-[#8A8A85] font-light leading-[1.68] mb-12 max-w-[480px]">
-            Abierto a proyectos donde pueda aplicar como vibe coder full-stack — desde la idea hasta el deploy — y a equipos que necesitan alguien que entregue rápido sin resignar calidad de producto.
+            Contame sobre tu proyecto o idea y lo convertimos en un producto real.
           </p>
           <div className="flex flex-wrap gap-3">
             <a
