@@ -9,7 +9,7 @@ export const projects: Project[] = [
     category: "fintech",
     status: "production",
     problem:
-      "Una financiera de Córdoba se lanzaba desde cero y no tenía ningún canal digital: sin landing, sin captura de leads, sin evaluación crediticia y sin forma de gestionar préstamos más allá de un Excel y WhatsApp informal. La alternativa del mercado era alquilar un software de gestión para financieras (tipo SB Software) a ~USD 430/mes con 24 meses de lock-in — pagando por integraciones con terceros que en realidad se pueden contratar directo.",
+      "Una financiera de Córdoba se lanzaba desde cero y no tenía ningún canal digital: sin landing, sin captura de leads, sin evaluación crediticia y sin forma de gestionar préstamos más allá de un Excel y WhatsApp informal. La alternativa del mercado era alquilar un software de gestión para financieras con licencia mensual y contrato de permanencia — pagando por integraciones con terceros que en realidad se pueden contratar directo.",
     idea:
       "Construir a medida la plataforma completa en vez de alquilarla: originación (LOS) —landing que simula el préstamo, captura el lead y corre un filtro crediticio automático— y gestión/servicing (LMS) —alta de préstamos, cronograma de cuotas, cobranza y mora. Con un motor de decisión crediticia que consulta la Central de Deudores del BCRA (API pública y gratuita) para pre-aprobar o rechazar en el momento, y un diseño de cobros agnóstico de proveedor para no quedar atado a ningún gateway.",
     result:
@@ -32,7 +32,7 @@ export const projects: Project[] = [
       {
         question: "¿Comprar un software de gestión para financieras o construirlo a medida?",
         chosen: "Construir a medida y contratar los proveedores externos (buró, débito, firma) directo",
-        rejected: "Alquilar SB Software / Prontocred a ~USD 430/mes con 24 meses de lock-in",
+        rejected: "Alquilar un software de gestión para financieras del mercado, con licencia mensual y contrato de permanencia",
         reason: "El 'sistema' que venden es en gran parte un caño hacia terceros (Nosis, procesadoras, AFIP). Construyendo el software propio y contratando a esos proveedores directo, se elimina el margen del intermediario, el lock-in, y se gana control total del dato.",
       },
       {
