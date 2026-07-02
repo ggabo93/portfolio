@@ -58,10 +58,10 @@ export const projects: Project[] = [
     startedAt: "2026-05-01",
     shippedAt: "2026-06-01",
     featuredConversation: [
-      { role: "user", content: "Necesito que el panel de leads se actualice en tiempo real sin recargar la página. Tengo Supabase." },
-      { role: "assistant", content: "Usá Supabase Realtime. El problema que vas a tener: con RLS activado, el canal WebSocket necesita autenticación. Tenés que llamar supabase.realtime.setAuth(session.access_token) antes de suscribirte, sino los events no llegan aunque el insert esté permitido." },
-      { role: "user", content: "Lo hice pero sigue sin funcionar. Agrego una política SELECT para authenticated?" },
-      { role: "assistant", content: "Exacto. Realtime necesita que el usuario autenticado tenga política SELECT en la tabla, aunque uses el service key para insertar. Agregá: CREATE POLICY 'authenticated can select' ON solicitudes FOR SELECT TO authenticated USING (true);" },
+      { role: "user", content: "Necesito que el panel se actualice en tiempo real sin recargar la página. Tengo Supabase." },
+      { role: "assistant", content: "Usá Supabase Realtime. El detalle que te va a trabar: con RLS activado, el canal WebSocket necesita autenticación. Hay que llamar supabase.realtime.setAuth(session.access_token) antes de suscribirse, sino los eventos no llegan aunque el insert esté permitido." },
+      { role: "user", content: "Lo hice pero sigue sin llegar nada. ¿Falta algo del lado de las políticas?" },
+      { role: "assistant", content: "Sí. Realtime necesita que el rol autenticado tenga una política SELECT, aunque insertes con el service key. Y la clave es acotarla al admin real, no dejarla abierta a cualquier usuario autenticado: si no, exponés los datos a cualquiera que tenga una sesión." },
     ],
   },
   {
