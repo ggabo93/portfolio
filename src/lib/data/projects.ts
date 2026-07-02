@@ -5,34 +5,41 @@ export const projects: Project[] = [
     slug: "teci-prestamos",
     number: "01",
     name: "TECI∞ Préstamos",
-    tagline: "Landing fintech + panel admin completo para una financiera argentina.",
+    tagline: "Plataforma fintech de originación y gestión de préstamos (LOS + LMS) para una financiera argentina.",
     category: "fintech",
     status: "production",
     problem:
-      "Una financiera de Córdoba se lanzaba desde cero y no tenía ningún canal digital: sin landing, sin forma de capturar leads online ni de gestionar solicitudes más allá de WhatsApp informal. Necesitaban un sistema completo antes de operar.",
+      "Una financiera de Córdoba se lanzaba desde cero y no tenía ningún canal digital: sin landing, sin captura de leads, sin evaluación crediticia y sin forma de gestionar préstamos más allá de un Excel y WhatsApp informal. La alternativa del mercado era alquilar un software de gestión para financieras (tipo SB Software) a ~USD 430/mes con 24 meses de lock-in — pagando por integraciones con terceros que en realidad se pueden contratar directo.",
     idea:
-      "Landing que simula el préstamo en tiempo real y convierte el interés en un lead estructurado, más un panel admin con pipeline visual, actualización en tiempo real y exports para que el equipo opere desde un solo lugar desde el día uno.",
+      "Construir a medida la plataforma completa en vez de alquilarla: originación (LOS) —landing que simula el préstamo, captura el lead y corre un filtro crediticio automático— y gestión/servicing (LMS) —alta de préstamos, cronograma de cuotas, cobranza y mora. Con un motor de decisión crediticia que consulta la Central de Deudores del BCRA (API pública y gratuita) para pre-aprobar o rechazar en el momento, y un diseño de cobros agnóstico de proveedor para no quedar atado a ningún gateway.",
     result:
-      "Sitio en producción en teciprestamos.com.ar. Panel admin con dashboard de KPIs, tabla de leads con Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales automáticos al equipo y al solicitante, rate limiting por IP y autenticación segura. La financiera arrancó operando con visibilidad completa del pipeline en vez de depender de WhatsApp informal.",
+      "Plataforma en producción en teciprestamos.com.ar. Originación: landing con simulador, captura de leads y filtro crediticio BCRA que auto-rutea cada solicitud (rechaza situación 4-5, deriva a revisión, deja pasar) y le responde al cliente al instante. Gestión: generación de préstamos con cronograma de cuotas, panel de servicing con seguimiento de mora y marcado de pagos. Todo sobre un panel admin con dashboard de KPIs, tabla de leads en Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales, rate limiting por IP y auth segura. Reemplazó una cotización de software de terceros por un sistema propio, sin costo de licencia mensual ni lock-in.",
     whatIWouldImprove:
-      "Agregar un CMS headless para que el cliente edite las tasas y condiciones sin necesidad de código. Implementar WhatsApp Business API oficial para automatizar el seguimiento post-solicitud. Conectar con un CRM externo para escalar el pipeline.",
-    stack: ["Next.js", "TypeScript", "Supabase", "Resend", "Vercel", "Tailwind"],
+      "Integrar Nosis/Veraz como capa de scoring paga sobre el filtro BCRA gratuito. Agregar el cron que marque cuotas vencidas en base para disparar cobranza automática. Enchufar el gateway de débito recurrente (el diseño ya es agnóstico) y firma electrónica. CMS headless para que el cliente edite tasas sin código.",
+    stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind"],
     architecture: {
-      description: "Next.js 16 App Router con Server Components puros en la landing y Client Components solo donde hay interactividad. Supabase como backend completo.",
+      description: "Next.js 16 App Router con Server Components puros en la landing y Client Components solo donde hay interactividad. Supabase (PostgreSQL + Auth + Realtime) como backend completo. Módulos separados de originación (LOS) y gestión de préstamos (LMS).",
       layers: [
         { name: "Landing (RSC)", detail: "Server Components puros, zero JS en el HTML inicial" },
-        { name: "Modal", detail: "Lazy-loaded Client Component, solo se descarga cuando el usuario lo abre" },
-        { name: "API Routes", detail: "POST /api/solicitud con rate limiting por IP via Supabase" },
+        { name: "Credit Decisioning", detail: "Filtro BCRA Central de Deudores: construye el CUIL desde DNI+sexo, consulta la API pública y auto-rutea el lead. Corre sincrónico con fallback seguro para responder al cliente en el momento" },
+        { name: "Loan Management", detail: "Función SQL atómica genera préstamo + cronograma de cuotas. Campos de cobro agnósticos de gateway (metodo_cobro / gateway) para no atarse a un proveedor" },
+        { name: "API Routes", detail: "POST /api/solicitud con rate limiting por IP; /api/prestamos y /api/cuotas con service client + auth sobre tablas con RLS sin políticas públicas" },
         { name: "Supabase Realtime", detail: "Panel admin actualiza la tabla en tiempo real con setAuth fix" },
-        { name: "Emails", detail: "Resend con templates extraídos en lib/emails/" },
+        { name: "Emails", detail: "Resend con templates extraídos en lib/emails/, enviados en after() para no sumar latencia" },
       ],
     },
     decisions: [
       {
-        question: "¿Cómo trasladar la identidad visual del cliente al código?",
-        chosen: "Traducir el PDF de branding (paleta, tipografías, logo) provisto por un diseñador a design tokens reutilizables en Tailwind",
-        rejected: "Definir colores y fuentes a criterio propio",
-        reason: "El cliente ya había invertido en identidad visual — mi trabajo era implementarla con precisión, no reinventarla.",
+        question: "¿Comprar un software de gestión para financieras o construirlo a medida?",
+        chosen: "Construir a medida y contratar los proveedores externos (buró, débito, firma) directo",
+        rejected: "Alquilar SB Software / Prontocred a ~USD 430/mes con 24 meses de lock-in",
+        reason: "El 'sistema' que venden es en gran parte un caño hacia terceros (Nosis, procesadoras, AFIP). Construyendo el software propio y contratando a esos proveedores directo, se elimina el margen del intermediario, el lock-in, y se gana control total del dato.",
+      },
+      {
+        question: "¿Dónde correr la evaluación crediticia: en la landing o en el panel?",
+        chosen: "Filtro BCRA gratis y sincrónico en la captura + informe pago (Nosis) recién en revisión manual",
+        rejected: "Correr el informe pago automáticamente en cada submit de la landing",
+        reason: "Un informe pago por cada submit sangra plata en tráfico no calificado y abre la puerta a abuso. El BCRA es gratis y oficial: filtra los casos malos sin costo; el informe caro queda para los leads que valen la pena.",
       },
       {
         question: "¿Cómo hacer rate limiting en Vercel serverless?",
@@ -40,19 +47,13 @@ export const projects: Project[] = [
         rejected: "In-memory Map",
         reason: "Las Vercel Functions son stateless — cada deploy es una instancia nueva. Un Map en memoria no persiste entre requests.",
       },
-      {
-        question: "¿Usar middleware o verificación en cada route?",
-        chosen: "Proxy middleware que verifica Supabase Auth en cada request a /admin",
-        rejected: "Verificación manual en cada page",
-        reason: "Un solo lugar de verdad para la auth. Si cambia la lógica, se cambia en un archivo.",
-      },
     ],
     errors: [
       "createClient() a nivel módulo causaba 'supabaseUrl is required' en build time. Fix: moverlo dentro del handler.",
-      "Resend 403 porque usaba subdomain send.teciprestamos.com.ar en lugar del dominio raíz verificado.",
       "Supabase Realtime no actualizaba porque faltaba setAuth(session.access_token) antes de suscribir al canal.",
+      "El pre-filtro crediticio corría en after() (post-respuesta), así que no podía avisarle al cliente en el momento. Fix: moverlo a sincrónico con timeout y fallback que nunca rechaza ante una falla del BCRA.",
     ],
-    hoursInvested: 60,
+    hoursInvested: 95,
     url: "https://teciprestamos.com.ar",
     startedAt: "2026-05-01",
     shippedAt: "2026-06-01",
@@ -67,15 +68,15 @@ export const projects: Project[] = [
     slug: "capitl",
     number: "02",
     name: "Capitl",
-    tagline: "SaaS interno de gestión de préstamos, cobranza y caja para una financiera.",
+    tagline: "Back-office de servicing y tesorería —cuotas, mora, caja multi-moneda y represtamistas— para una financiera ya en operación.",
     category: "saas",
     status: "production",
     problem:
-      "La operación completa —clientes, préstamos, cuotas, mora, represtamistas y caja— se gestionaba en un Excel desestructurado. Sin fórmulas consistentes, sin historial confiable: cuando el volumen creció, los pagos se perdían, la caja no cerraba y calcular la mora era manual.",
+      "A diferencia de una financiera que arranca de cero, ésta ya operaba a volumen —pero todo el back-office (clientes, préstamos, cuotas, mora, represtamistas y caja multi-moneda) vivía en un Excel desestructurado. Sin fórmulas consistentes ni historial confiable: los pagos se perdían, la caja no cerraba y la mora se calculaba a mano. No era un problema de captar clientes, sino de operar los que ya tenían.",
     idea:
-      "Reemplazar el Excel por un SaaS interno con módulos dedicados: alta de clientes, wizard de préstamos multi-paso, seguimiento de cuotas con mora automática, cobranza, caja diaria multi-moneda ARS/USD y gestión de represtamistas con comisiones separadas.",
+      "Reemplazar el Excel por un SaaS interno enfocado en el servicing y la tesorería (no en la captación): alta de clientes, wizard de préstamos multi-paso, seguimiento de cuotas con mora automática, cobranza, caja diaria multi-moneda ARS/USD y gestión de represtamistas con comisiones separadas. Es el back-office puro, sin canal público.",
     result:
-      "Sistema en producción con 7 módulos completos. El cálculo de mora, las comisiones de represtamistas y el balance de caja que antes tomaban horas de trabajo manual en Excel ahora son automáticos e instantáneos. La operación pasó de un Excel compartido a un sistema con roles, historial y trazabilidad completa.",
+      "Sistema en producción con 7 módulos completos. El cálculo de mora, las comisiones de represtamistas y el balance de caja multi-moneda que antes tomaban horas de trabajo manual en Excel ahora son automáticos e instantáneos. La operación pasó de un Excel compartido a un sistema con roles, historial y trazabilidad completa.",
     whatIWouldImprove:
       "Agregar notificaciones push para cobranzas vencidas sin necesidad de ingresar al sistema. Exportar reportes de caja por período para contabilidad. Dashboard con curva de mora histórica y proyección de cartera.",
     stack: ["Next.js", "TypeScript", "Supabase", "Shadcn/ui", "Zod", "TanStack Table", "Tailwind"],
