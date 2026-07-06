@@ -13,9 +13,9 @@ export const projects: Project[] = [
     idea:
       "Construir a medida la plataforma completa en vez de alquilarla: originación (LOS) —landing que simula el préstamo, captura el lead y corre un filtro crediticio automático— y gestión/servicing (LMS) —alta de préstamos, cronograma de cuotas, cobranza y mora. Con un motor de decisión crediticia que consulta la Central de Deudores del BCRA (API pública y gratuita) para pre-aprobar o rechazar en el momento, y un diseño de cobros agnóstico de proveedor para no quedar atado a ningún gateway.",
     result:
-      "Plataforma en producción en teciprestamos.com.ar. Originación: landing con simulador, captura de leads y filtro crediticio BCRA que auto-rutea cada solicitud (rechaza situación 4-5, deriva a revisión, deja pasar) y le responde al cliente al instante. Gestión: generación de préstamos con cronograma de cuotas, panel de servicing con seguimiento de mora y marcado de pagos. Todo sobre un panel admin con dashboard de KPIs, tabla de leads en Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales, rate limiting por IP y auth segura. Reemplazó una cotización de software de terceros por un sistema propio, sin costo de licencia mensual ni lock-in.",
+      "Plataforma en producción en teciprestamos.com.ar. Originación: landing con simulador, captura de leads y filtro crediticio BCRA que auto-rutea cada solicitud (rechaza situación 4-5, deriva a revisión, deja pasar) y le responde al cliente al instante. Gestión: generación de préstamos con cronograma de cuotas, cobranza con seguimiento de mora (cron diario), caja con saldo real y registro de desembolso. Todo sobre un panel admin con dashboard de KPIs, tabla de leads en Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales, rate limiting por IP y páginas legales publicadas. Como el sistema pasó a manejar dinero real y datos sensibles de clientes, se hizo una auditoría de seguridad completa: se cerró una brecha de autorización entre la aplicación y la base de datos, y se sumó 2FA obligatorio para el panel admin, un log de auditoría inmutable por cada acción sensible, un libro de caja append-only (nunca se pierde historial) y CAPTCHA anti fuerza-bruta en el login. Reemplazó una cotización de software de terceros por un sistema propio, sin costo de licencia mensual ni lock-in.",
     whatIWouldImprove:
-      "Integrar Nosis/Veraz como capa de scoring paga sobre el filtro BCRA gratuito. Agregar el cron que marque cuotas vencidas en base para disparar cobranza automática. Enchufar el gateway de débito recurrente (el diseño ya es agnóstico) y firma electrónica. CMS headless para que el cliente edite tasas sin código.",
+      "Integrar Nosis/Veraz como capa de scoring paga sobre el filtro BCRA gratuito. Enchufar el gateway de débito recurrente (el diseño ya es agnóstico) y firma electrónica para el onboarding. CMS headless para que el cliente edite tasas sin código.",
     stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind"],
     architecture: {
       description: "Next.js 16 App Router con Server Components puros en la landing y Client Components solo donde hay interactividad. Supabase (PostgreSQL + Auth + Realtime) como backend completo. Módulos separados de originación (LOS) y gestión de préstamos (LMS).",
@@ -26,6 +26,7 @@ export const projects: Project[] = [
         { name: "API Routes", detail: "POST /api/solicitud con rate limiting por IP; /api/prestamos y /api/cuotas con service client + auth sobre tablas con RLS sin políticas públicas" },
         { name: "Supabase Realtime", detail: "Panel admin actualiza la tabla en tiempo real con setAuth fix" },
         { name: "Emails", detail: "Resend con templates extraídos en lib/emails/, enviados en after() para no sumar latencia" },
+        { name: "Seguridad & Auditoría", detail: "2FA (TOTP) obligatorio para el panel admin, log de auditoría inmutable por cada acción sensible, libro de caja append-only (las anulaciones se revierten con un asiento nuevo, nunca se borra), CAPTCHA anti fuerza-bruta en el login" },
       ],
     },
     decisions: [
@@ -47,13 +48,20 @@ export const projects: Project[] = [
         rejected: "In-memory Map",
         reason: "Las Vercel Functions son stateless — cada deploy es una instancia nueva. Un Map en memoria no persiste entre requests.",
       },
+      {
+        question: "¿Cómo blindar el acceso a datos financieros antes de escalar el negocio?",
+        chosen: "Auditoría de seguridad completa apenas el sistema empezó a manejar dinero y datos de clientes reales",
+        rejected: "Confiar en que la validación de la aplicación (Next.js) alcanza como única barrera de autorización",
+        reason: "La auditoría encontró una brecha real entre lo que la aplicación validaba y lo que la base de datos permitía por debajo: un flujo quedaba protegido en la capa de app pero no en la capa de datos. La autorización tiene que garantizarse en cada capa, no asumirse desde una sola.",
+      },
     ],
     errors: [
       "createClient() a nivel módulo causaba 'supabaseUrl is required' en build time. Fix: moverlo dentro del handler.",
       "Supabase Realtime no actualizaba porque faltaba setAuth(session.access_token) antes de suscribir al canal.",
       "El pre-filtro crediticio corría en after() (post-respuesta), así que no podía avisarle al cliente en el momento. Fix: moverlo a sincrónico con timeout y fallback que nunca rechaza ante una falla del BCRA.",
+      "La lógica de 2FA obligatorio solo detectaba 'falta completar el segundo factor', no 'todavía no hay ningún factor cargado' — dejaba pasar cuentas sin enrolar. Fix: chequear explícitamente si existe un factor verificado, no solo comparar niveles de autenticación.",
     ],
-    hoursInvested: 95,
+    hoursInvested: 130,
     url: "https://teciprestamos.com.ar",
     startedAt: "2026-05-01",
     shippedAt: "2026-06-01",

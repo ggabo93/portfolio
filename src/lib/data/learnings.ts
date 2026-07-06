@@ -36,4 +36,11 @@ export const learnings: Learning[] = [
     category: "technical",
     date: "2026-04",
   },
+  {
+    id: "6",
+    title: "La autorización tiene que estar garantizada en cada capa, no en una sola",
+    body: "En la auditoría de seguridad de TECI encontré un flujo que la aplicación protegía bien, pero que la base de datos por debajo dejaba pasar igual. Validar en el frontend o en la API no alcanza si la capa de datos no exige lo mismo — la última línea de defensa siempre tiene que estar en la base.",
+    category: "technical",
+    date: "2026-07",
+  },
 ];

@@ -2,6 +2,12 @@ import type { TimelineEntry } from "@/lib/types";
 
 export const timeline: TimelineEntry[] = [
   {
+    date: "2026-07",
+    title: "Auditoría de seguridad en TECI∞",
+    description: "Con la fintech ya manejando dinero y datos reales, hice una auditoría completa: cerré una brecha de autorización entre la app y la base de datos, y sumé 2FA obligatorio, log de auditoría inmutable y un libro de caja append-only.",
+    type: "learning",
+  },
+  {
     date: "2026-06",
     title: "Portfolio como producto",
     description: "Empiezo a tratar mi presencia online como un producto, no un CV. Este sitio es el resultado.",
