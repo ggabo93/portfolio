@@ -28,10 +28,10 @@ export const dashboardMetrics: DashboardMetric[] = [
     value: 1,
     size: "sm",
   },
-{
+  {
     id: "hours",
     label: "Horas invertidas",
-    value: 240,
+    value: 460,
     unit: "h",
     size: "lg",
   },

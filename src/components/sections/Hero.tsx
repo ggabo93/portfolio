@@ -52,7 +52,7 @@ export function Hero() {
           className="flex flex-col md:flex-row justify-between items-start md:items-end border-t border-[#E5E4E0] pt-7 gap-8"
         >
           <p className="font-sans text-[clamp(15px,1.5vw,18px)] text-[#4A4A45] font-light max-w-[500px] leading-[1.68]">
-            Construyo productos reales usando IA como copiloto — desde la idea hasta el deploy en producción. Cuatro apps entregadas a clientes reales en Córdoba, Argentina.
+            Construyo productos reales usando IA como copiloto — desde la idea hasta el deploy en producción. Tres apps en producción y un SaaS propio en desarrollo, con clientes reales en Córdoba, Argentina.
           </p>
           <div className="text-left md:text-right flex-shrink-0">
             <div className="font-mono text-[10px] tracking-[0.12em] text-[#8A8A85] uppercase mb-1.5">

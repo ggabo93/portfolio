@@ -2,6 +2,12 @@ import type { TimelineEntry } from "@/lib/types";
 
 export const timeline: TimelineEntry[] = [
   {
+    date: "2026-08",
+    title: "Celestina se convierte en producto",
+    description: "Bifurqué el código de Celestina en un SaaS multi-tenant propio: una sola base de datos sirve a todas las distribuidoras futuras, aisladas por RLS, con roles firmados en el token de sesión en vez de leídos del cliente.",
+    type: "project",
+  },
+  {
     date: "2026-07",
     title: "Auditoría de seguridad en TECI∞",
     description: "Con la fintech ya manejando dinero y datos reales, hice una auditoría completa: cerré una brecha de autorización entre la app y la base de datos, y sumé 2FA obligatorio, log de auditoría inmutable y un libro de caja append-only.",

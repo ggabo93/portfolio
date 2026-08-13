@@ -13,10 +13,10 @@ export const projects: Project[] = [
     idea:
       "Construir a medida la plataforma completa en vez de alquilarla: originación (LOS) —landing que simula el préstamo, captura el lead y corre un filtro crediticio automático— y gestión/servicing (LMS) —alta de préstamos, cronograma de cuotas, cobranza y mora. Con un motor de decisión crediticia que consulta la Central de Deudores del BCRA (API pública y gratuita) para pre-aprobar o rechazar en el momento, y un diseño de cobros agnóstico de proveedor para no quedar atado a ningún gateway.",
     result:
-      "Plataforma en producción en teciprestamos.com.ar. Originación: landing con simulador, captura de leads y filtro crediticio BCRA que auto-rutea cada solicitud (rechaza situación 4-5, deriva a revisión, deja pasar) y le responde al cliente al instante. Gestión: generación de préstamos con cronograma de cuotas, cobranza con seguimiento de mora (cron diario), caja con saldo real y registro de desembolso. Todo sobre un panel admin con dashboard de KPIs, tabla de leads en Realtime (sin polling), exports CSV/Excel/PDF, emails transaccionales, rate limiting por IP y páginas legales publicadas. Como el sistema pasó a manejar dinero real y datos sensibles de clientes, se hizo una auditoría de seguridad completa: se cerró una brecha de autorización entre la aplicación y la base de datos, y se sumó 2FA obligatorio para el panel admin, un log de auditoría inmutable por cada acción sensible, un libro de caja append-only (nunca se pierde historial) y CAPTCHA anti fuerza-bruta en el login. Reemplazó una cotización de software de terceros por un sistema propio, sin costo de licencia mensual ni lock-in.",
+      "Plataforma en producción en teciprestamos.com.ar. Originación: landing con simulador, captura de leads y filtro crediticio BCRA que auto-rutea cada solicitud (rechaza situación 4-5, deriva a revisión, deja pasar) y le responde al cliente al instante. Gestión: generación de préstamos con cronograma de cuotas, cobranza con seguimiento de mora (cron diario), caja con saldo real y registro de desembolso, más un portal donde el solicitante retoma su onboarding si quedó pendiente. Panel admin con dashboard de KPIs (gráficos con Recharts), tabla de leads en Realtime, tablas con TanStack Table, exports CSV/Excel/PDF, emails transaccionales y páginas legales publicadas. Como el sistema pasó a manejar dinero real y datos sensibles, se hizo una auditoría de seguridad completa y una segunda pasada de hardening: todas las lecturas del panel dejaron de usar el service_role y pasan por RLS real, el cobro de cuotas se volvió atómico (cerraba una condición de carrera que permitía cobrar la misma cuota dos veces), guardar la Configuración del sistema pide un segundo factor TOTP en el momento (no solo al loguearse), y los tokens de onboarding quedan hasheados en la base y expiran — antes vivían en texto plano sin vencimiento. Reemplazó una cotización de software de terceros por un sistema propio, sin costo de licencia mensual ni lock-in.",
     whatIWouldImprove:
       "Integrar Nosis/Veraz como capa de scoring paga sobre el filtro BCRA gratuito. Enchufar el gateway de débito recurrente (el diseño ya es agnóstico) y firma electrónica para el onboarding. CMS headless para que el cliente edite tasas sin código.",
-    stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind"],
+    stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind", "Radix UI", "TanStack Table", "Recharts"],
     architecture: {
       description: "Next.js 16 App Router con Server Components puros en la landing y Client Components solo donde hay interactividad. Supabase (PostgreSQL + Auth + Realtime) como backend completo. Módulos separados de originación (LOS) y gestión de préstamos (LMS).",
       layers: [
@@ -60,8 +60,9 @@ export const projects: Project[] = [
       "Supabase Realtime no actualizaba porque faltaba setAuth(session.access_token) antes de suscribir al canal.",
       "El pre-filtro crediticio corría en after() (post-respuesta), así que no podía avisarle al cliente en el momento. Fix: moverlo a sincrónico con timeout y fallback que nunca rechaza ante una falla del BCRA.",
       "La lógica de 2FA obligatorio solo detectaba 'falta completar el segundo factor', no 'todavía no hay ningún factor cargado' — dejaba pasar cuentas sin enrolar. Fix: chequear explícitamente si existe un factor verificado, no solo comparar niveles de autenticación.",
+      "El cobro de una cuota no era atómico: dos requests casi simultáneos (doble click, retry de red) podían leer el mismo estado 'pendiente' y cobrarla dos veces antes de que el primero terminara de escribir. Fix: la operación de cobro pasó a ser atómica en la base, no un read-then-write desde la aplicación.",
     ],
-    hoursInvested: 130,
+    hoursInvested: 140,
     url: "https://teciprestamos.com.ar",
     startedAt: "2026-05-01",
     shippedAt: "2026-06-01",
@@ -71,6 +72,52 @@ export const projects: Project[] = [
       { role: "user", content: "Lo hice pero sigue sin llegar nada. ¿Falta algo del lado de las políticas?" },
       { role: "assistant", content: "Sí. Realtime necesita que el rol autenticado tenga una política SELECT, aunque insertes con el service key. Y la clave es acotarla al admin real, no dejarla abierta a cualquier usuario autenticado: si no, exponés los datos a cualquiera que tenga una sesión." },
     ],
+  },
+  {
+    slug: "distribuidora-erp",
+    number: "05",
+    name: "Distribuidora ERP",
+    tagline: "SaaS multi-tenant para distribuidoras de agua y bidones — producto propio construido a partir de Celestina.",
+    category: "saas",
+    status: "building",
+    problem:
+      "Celestina resolvía la logística de un solo cliente. Escalar el negocio a una segunda o tercera distribuidora con ese mismo código significaba clonar el proyecto y levantar un deploy y una base de Supabase nuevos por cada una — sin aislamiento real entre clientes y con cada bug o feature multiplicado por N instancias a mantener.",
+    idea:
+      "Fork de Celestina reescrito como SaaS multi-tenant real: una sola base de datos y un solo deploy sirven a todas las distribuidoras, aisladas entre sí por Row Level Security. La empresa y el rol de cada usuario viajan firmados en el token de sesión —inyectados por un Custom Access Token Hook— en vez de leerse de una tabla o del localStorage que el cliente podría manipular. Motor de facturación automática corriendo server-side con pg_cron, y un panel de operador de plataforma que administra altas de empresas sin acceso directo a los datos de ningún tenant.",
+    result:
+      "Producto funcional con el modelo multi-tenant completo: alta de una distribuidora nueva sin tocar código (marca, alias bancario, textos de WhatsApp se configuran por empresa), aprobación manual de paneles de repartidor nuevos, RLS con USING y WITH CHECK en cada tabla de negocio, y funciones SECURITY DEFINER con guard explícito de tenant propio para que ni una función de facturación pueda tocar datos de otra empresa por error. El operador de la plataforma administra altas sin ver un solo dato de negocio de ningún cliente — todo pasa por una Edge Function que valida sus permisos aparte. Documentado en profundidad (diseño multi-tenant, lógica de negocio, onboarding) para poder incorporar clientes nuevos sin re-explicar el sistema cada vez.",
+    whatIWouldImprove:
+      "Flujo de self-service para que una distribuidora nueva se dé de alta sola, sin intervención manual del operador. Panel de planes/facturación para que la comercialización sea autogestionada, no manual por mi parte.",
+    stack: ["React", "Vite", "Supabase", "PostgreSQL", "Tailwind", "OneSignal"],
+    architecture: {
+      description: "Fork de Celestina reescrito para multi-tenancy real: misma base de código de producto, pero con aislamiento de datos por empresa y roles inyectados server-side en vez de leídos del cliente.",
+      layers: [
+        { name: "Tenancy", detail: "Custom Access Token Hook inyecta empresa_id y rol en el JWT al login — RLS los lee directo del token, no de una tabla que el cliente pueda falsear." },
+        { name: "RLS", detail: "Cada tabla de negocio filtra por empresa_id = empresa_actual() con USING y WITH CHECK — una empresa no puede leer ni escribir filas de otra." },
+        { name: "Funciones SECURITY DEFINER", detail: "Las funciones de negocio que reciben un id como parámetro (ej. facturación) verifican explícitamente que ese id sea de la empresa de quien llama, porque dentro de una SECURITY DEFINER RLS no se aplica solo." },
+        { name: "Facturación", detail: "pg_cron dispara facturacion_diaria() una vez por día, recorre todas las empresas activas y genera la deuda de los clientes con abono mensual." },
+        { name: "Panel de plataforma", detail: "El operador no lee tablas de negocio directo — todo pasa por una Edge Function que valida sus permisos contra plataforma_admins." },
+      ],
+    },
+    decisions: [
+      {
+        question: "¿Clonar el código por cada cliente nuevo o construir multi-tenancy real?",
+        chosen: "Una sola base de datos y un solo deploy para todas las empresas, aisladas por RLS",
+        rejected: "Seguir el patrón de Celestina: un proyecto de Supabase y un deploy por cliente",
+        reason: "Clonar no escala: cada bug hay que arreglarlo N veces, cada feature hay que desplegarla N veces. Multi-tenant real significa un solo lugar donde mantener el producto.",
+      },
+      {
+        question: "¿Dónde inyectar el rol y la empresa del usuario?",
+        chosen: "Custom Access Token Hook — quedan firmados en el JWT",
+        rejected: "Leerlos de una tabla o de localStorage en cada request",
+        reason: "Si el rol se lee de un lugar que el cliente controla, se puede falsificar. Firmado en el token, el backend confía en el mismo valor que usa RLS del lado del servidor.",
+      },
+    ],
+    errors: [
+      "Dentro de una función SECURITY DEFINER, RLS no se aplica automáticamente aunque la tabla tenga políticas — hubo que agregar un chequeo explícito de que el id recibido por parámetro pertenece a la empresa de quien llama, en cada función de negocio que toca datos por id.",
+    ],
+    hoursInvested: 70,
+    startedAt: "2026-07-17",
   },
   {
     slug: "capitl",
@@ -124,7 +171,7 @@ export const projects: Project[] = [
     idea:
       "App web mobile-first con dos módulos diferenciados: panel administrativo completo para el dueño (clientes, almacén, caja, comisiones e historial) y vista de reparto para el repartidor (ruta del día, confirmación de entregas y registro de pagos). Más un bot de WhatsApp que corre automáticamente: avisa a clientes sin consumo en 14 días y recuerda deudas vencidas.",
     result:
-      "App en producción con roles diferenciados. El administrador opera desde el panel con visibilidad total de la operación; el repartidor accede solo a su vista de ruta desde el celular. El bot de WhatsApp corre diariamente en Render con Docker y reemplazó el seguimiento manual. Las cobranzas vencidas y el seguimiento de clientes inactivos que antes dependían de revisar el Excel hoy son automáticos.",
+      "App en producción con roles diferenciados. El administrador opera desde el panel con visibilidad total de la operación; el repartidor accede solo a su vista de ruta desde el celular. El bot de WhatsApp corre diariamente en Render con Docker y reemplazó el seguimiento manual. Las cobranzas vencidas y el seguimiento de clientes inactivos que antes dependían de revisar el Excel hoy son automáticos. Iteración constante desde el lanzamiento: historial global de transacciones, filtro por mes para ver quién debe qué período puntual, y una corrección de un bug de coma flotante que bloqueaba retiros de caja del repartidor cuando el monto no cerraba exacto. También se sumó un registro independiente para la planta llenadora externa que le provee los bidones al cliente, con su propio stock separado del inventario general.",
     whatIWouldImprove:
       "Migrar el bot a WhatsApp Business API oficial para eliminar el riesgo de ban. Agregar geotracking en tiempo real para seguimiento de rutas. Convertir la app en una aplicación nativa (React Native) para mejor experiencia del repartidor en campo. Dashboard de métricas de cobranza y eficiencia de rutas.",
     stack: ["React", "Vite", "Supabase", "Node.js", "Docker", "Render"],
@@ -150,8 +197,9 @@ export const projects: Project[] = [
     errors: [
       "Sin el volumen persistente en Render, cada deploy pedía escanear el QR de WhatsApp de nuevo. Fix: disco persistente montado en el path de LocalAuth.",
       "Dos mensajes al mismo cliente en el mismo minuto provocaban ban temporal. Fix: delay aleatorio mínimo de 65 segundos entre envíos.",
+      "Un bug de precisión de coma flotante en JavaScript hacía que un retiro de caja del repartidor se bloqueara cuando el monto disponible no cerraba con exactitud matemática. Fix: redondeo explícito antes de comparar montos, en vez de comparar floats crudos.",
     ],
-    hoursInvested: 60,
+    hoursInvested: 130,
     startedAt: "2026-03-01",
     shippedAt: "2026-04-01",
   },
