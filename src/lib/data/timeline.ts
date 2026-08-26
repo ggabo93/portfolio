@@ -3,6 +3,12 @@ import type { TimelineEntry } from "@/lib/types";
 export const timeline: TimelineEntry[] = [
   {
     date: "2026-08",
+    title: "MiSodería: marca, diseño y primeros tests",
+    description: "El SaaS multi-tenant se rebrandeó como MiSodería, con rediseño premium en las cuatro superficies (admin, mobile, repartidor, plataforma) y mi primera suite de tests automatizados, enfocada en la lógica de facturación que maneja plata real.",
+    type: "project",
+  },
+  {
+    date: "2026-08",
     title: "Celestina se convierte en producto",
     description: "Bifurqué el código de Celestina en un SaaS multi-tenant propio: una sola base de datos sirve a todas las distribuidoras futuras, aisladas por RLS, con roles firmados en el token de sesión en vez de leídos del cliente.",
     type: "project",

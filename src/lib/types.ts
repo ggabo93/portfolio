@@ -7,7 +7,7 @@ export type TechTag =
   | "Supabase" | "PostgreSQL" | "Node.js" | "Docker" | "Vercel" | "Render"
   | "Resend" | "Framer Motion" | "WhatsApp API" | "Puppeteer" | "Vite"
   | "React Hook Form" | "Zod" | "TanStack Table" | "Claude AI" | "Gemini"
-  | "Radix UI" | "Recharts" | "OneSignal";
+  | "Radix UI" | "Recharts" | "OneSignal" | "Vitest";
 
 export type ProjectStatus = "production" | "building" | "paused" | "archived";
 export type ProjectCategory = "fintech" | "saas" | "automation" | "gestión" | "landing";

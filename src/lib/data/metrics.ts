@@ -31,7 +31,7 @@ export const dashboardMetrics: DashboardMetric[] = [
   {
     id: "hours",
     label: "Horas invertidas",
-    value: 460,
+    value: 535,
     unit: "h",
     size: "lg",
   },
