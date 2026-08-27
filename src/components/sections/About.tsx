@@ -19,9 +19,9 @@ export function About() {
         <p className="font-sans text-[16px] text-[#8C8C88] font-normal leading-[1.7] max-w-[720px]">
           Entregué tres apps en producción a clientes reales en Córdoba: una landing + panel admin para una
           fintech, un SaaS de gestión de préstamos y un sistema con bot de WhatsApp para una distribuidora. En
-          paralelo estoy construyendo un dashboard comercial para una empresa de frutos secos y convirtiendo ese
-          sistema de distribuidora en MiSodería, un SaaS multi-tenant propio con marca, diseño y tests
-          automatizados. Todas con código real, decisiones documentadas y errores que aprendí en el camino.
+          paralelo estoy convirtiendo ese sistema de distribuidora en MiSodería, un SaaS multi-tenant propio con
+          marca, diseño y tests automatizados. Todas con código real, decisiones documentadas y errores que
+          aprendí en el camino.
         </p>
       </ScrollReveal>
     </section>
