@@ -55,36 +55,3 @@ export interface Project {
   featuredConversation?: AIConversationTurn[];
 }
 
-export interface TimelineEntry {
-  date: string;
-  title: string;
-  description: string;
-  type: "milestone" | "learning" | "project" | "tool";
-}
-
-export interface Learning {
-  id: string;
-  title: string;
-  body: string;
-  category: "technical" | "product" | "process" | "mindset";
-  date: string;
-}
-
-export interface Lab {
-  name: string;
-  description: string;
-  status: "building" | "idea" | "shipped";
-  stack: TechTag[];
-}
-
-/* ── Dashboard ── */
-export type MetricResolver = () => Promise<number | string> | number | string;
-
-export interface DashboardMetric {
-  id: string;
-  label: string;
-  value: number | string;
-  unit?: string;
-  size: "sm" | "md" | "lg";
-  resolver?: MetricResolver;
-}

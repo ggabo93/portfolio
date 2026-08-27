@@ -29,8 +29,8 @@ export function Cursor() {
       if (dotRef.current) {
         dotRef.current.style.width = "34px";
         dotRef.current.style.height = "34px";
-        dotRef.current.style.background = "rgba(45,90,61,.1)";
-        dotRef.current.style.border = "1.5px solid #2D5A3D";
+        dotRef.current.style.background = "rgba(110,155,255,.1)";
+        dotRef.current.style.border = "1.5px solid #6E9BFF";
       }
       if (ringRef.current) ringRef.current.style.opacity = "0";
     };
@@ -39,7 +39,7 @@ export function Cursor() {
       if (dotRef.current) {
         dotRef.current.style.width = "6px";
         dotRef.current.style.height = "6px";
-        dotRef.current.style.background = "#2D5A3D";
+        dotRef.current.style.background = "#6E9BFF";
         dotRef.current.style.border = "none";
       }
       if (ringRef.current) ringRef.current.style.opacity = "1";
@@ -74,7 +74,7 @@ export function Cursor() {
           translateY: "-50%",
           width: "6px",
           height: "6px",
-          background: "#2D5A3D",
+          background: "#6E9BFF",
           transition: "width .22s ease, height .22s ease, background .2s ease, border .18s ease",
         }}
       />
@@ -88,7 +88,7 @@ export function Cursor() {
           translateY: "-50%",
           width: "30px",
           height: "30px",
-          border: "1.5px solid rgba(45,90,61,.3)",
+          border: "1.5px solid rgba(110,155,255,.3)",
           transition: "opacity .2s",
         }}
       />

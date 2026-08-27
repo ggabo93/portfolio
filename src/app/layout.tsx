@@ -1,25 +1,17 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Cursor } from "@/components/layout/Cursor";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dmsans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
@@ -59,8 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es">
       <body
         className={`
-          ${cormorant.variable} ${dmSans.variable} ${jetbrainsMono.variable}
-          font-sans antialiased bg-[#FAFAF8] text-[#1C1C1A] min-h-screen
+          ${inter.variable} ${plexMono.variable}
+          font-sans antialiased bg-[#0A0A0A] text-[#F5F5F3] min-h-screen
         `}
       >
         {children}

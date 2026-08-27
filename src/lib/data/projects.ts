@@ -243,10 +243,3 @@ export const projects: Project[] = [
     shippedAt: "2026-05-01",
   },
 ];
-
-export const currentProject = {
-  name: "Portfolio personal",
-  description: "Este mismo sitio. Construido con Next.js, Framer Motion y mucho criterio.",
-  stack: ["Next.js", "TypeScript", "Framer Motion", "Tailwind"] as const,
-  startedAt: "2026-06-26",
-};

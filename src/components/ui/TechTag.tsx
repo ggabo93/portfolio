@@ -5,14 +5,14 @@ interface TechTagProps {
 
 export function TechTag({ name, variant = "default" }: TechTagProps) {
   const styles = {
-    default: "bg-transparent border border-[#E5E4E0] text-[#6B6B66]",
-    accent: "bg-[#EEF4F0] border border-[rgba(45,90,61,0.2)] text-[#2D5A3D]",
-    muted: "bg-transparent border border-[#E5E4E0] text-[#A8A8A3]",
+    default: "bg-transparent border border-[rgba(255,255,255,0.1)] text-[#8C8C88]",
+    accent: "bg-[rgba(110,155,255,0.12)] border border-[rgba(110,155,255,0.28)] text-[#6E9BFF]",
+    muted: "bg-transparent border border-[rgba(255,255,255,0.1)] text-[#5A5A57]",
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-1 font-mono text-[10px] font-500 tracking-wide ${styles[variant]}`}
+      className={`inline-flex items-center px-2.5 py-1 rounded-[5px] font-mono text-[10px] font-medium tracking-wide ${styles[variant]}`}
     >
       {name}
     </span>

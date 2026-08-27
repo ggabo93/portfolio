@@ -2,56 +2,28 @@
 
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
-const stats = [
-  { value: "3", label: "Apps en producción" },
-  { value: "4", label: "Clientes reales" },
-  { value: "535h", label: "Documentadas" },
-  { value: "3", label: "Automatizaciones" },
-];
-
 export function About() {
   return (
-    <section id="about" className="py-section px-6 md:px-16 max-w-6xl mx-auto">
-      <div className="flex flex-col md:flex-row gap-16 md:gap-20">
-
-        {/* Left: stats grid */}
-        <div className="w-full md:w-[260px] flex-shrink-0">
-          <ScrollReveal>
-            <div className="grid grid-cols-2 gap-6">
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <div className="font-serif-italic text-[44px] font-normal text-[#1C1C1A] leading-none">
-                    {s.value}
-                  </div>
-                  <div className="font-mono text-[10px] tracking-[0.08em] text-[#8A8A85] uppercase mt-1.5">
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
+    <section id="about" className="py-section px-6 md:px-12 max-w-[1000px] mx-auto">
+      <ScrollReveal>
+        <div className="font-mono text-[12px] tracking-[0.14em] text-[#8C8C88] uppercase mb-8">
+          01 · Sobre mí
         </div>
-
-        {/* Right: bio */}
-        <div className="flex-1">
-          <ScrollReveal>
-            <div className="font-mono text-[10px] tracking-[0.14em] text-[#8A8A85] uppercase mb-5">
-              Sobre mí
-            </div>
-            <h2 className="font-serif text-[clamp(32px,4vw,52px)] font-normal leading-[1.1] tracking-[-0.015em] text-[#1C1C1A] mb-9">
-              Criterio técnico <em className="font-serif-italic">más</em> velocidad con IA.
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal delay={0.08} className="max-w-[560px]">
-            <p className="font-sans text-[16px] text-[#4A4A45] leading-[1.78] font-light mb-5">
-              Empecé Ingeniería en Informática y, en paralelo, una certificación en Data Analytics (Python, SQL, Power BI). Desde fines de 2025 uso esa base técnica junto con Claude Code como par de trabajo —no como autocompletado— para construir productos completos: frontend, backend, base de datos y deploy.
-            </p>
-            <p className="font-sans text-[16px] text-[#4A4A45] leading-[1.78] font-light mb-5">
-              Entregué tres apps en producción a clientes reales en Córdoba: una landing + panel admin para una fintech, un SaaS de gestión de préstamos y un sistema con bot de WhatsApp para una distribuidora. En paralelo estoy construyendo un dashboard comercial para una empresa de frutos secos y convirtiendo ese sistema de distribuidora en MiSodería, un SaaS multi-tenant propio con marca, diseño y tests automatizados. Todas con código real, decisiones documentadas y errores que aprendí en el camino.
-            </p>
-          </ScrollReveal>
-        </div>
-      </div>
+        <p className="font-sans text-[24px] md:text-[32px] font-medium leading-[1.3] tracking-[-0.01em] text-[#F5F5F3] mb-8">
+          Empecé Ingeniería en Informática y una certificación en Data Analytics. Desde fines de 2025 uso esa base
+          junto con <span className="text-[#6E9BFF]">Claude Code como par de trabajo</span> —no como
+          autocompletado— para construir productos completos: frontend, backend, base de datos y deploy.
+        </p>
+      </ScrollReveal>
+      <ScrollReveal delay={0.08}>
+        <p className="font-sans text-[16px] text-[#8C8C88] font-normal leading-[1.7] max-w-[720px]">
+          Entregué tres apps en producción a clientes reales en Córdoba: una landing + panel admin para una
+          fintech, un SaaS de gestión de préstamos y un sistema con bot de WhatsApp para una distribuidora. En
+          paralelo estoy construyendo un dashboard comercial para una empresa de frutos secos y convirtiendo ese
+          sistema de distribuidora en MiSodería, un SaaS multi-tenant propio con marca, diseño y tests
+          automatizados. Todas con código real, decisiones documentadas y errores que aprendí en el camino.
+        </p>
+      </ScrollReveal>
     </section>
   );
 }
