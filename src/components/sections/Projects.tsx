@@ -73,9 +73,12 @@ export function Projects() {
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-1.5">
-                    {project.stack.map((t) => (
+                    {project.stack.slice(0, 4).map((t) => (
                       <TechTag key={t} name={t} />
                     ))}
+                    {project.stack.length > 4 && (
+                      <TechTag name={`+${project.stack.length - 4}`} variant="muted" />
+                    )}
                   </div>
                 </div>
 
@@ -92,7 +95,7 @@ export function Projects() {
                     </div>
                     <div className="bg-[#FAFAF8] px-5 py-4">
                       <div className="font-serif text-[28px] font-normal text-[#1C1C1A] leading-none">
-                        {project.stack.length}
+                        {project.stack.length + (project.services?.length ?? 0)}
                       </div>
                       <div className="font-mono text-[9px] tracking-[0.08em] text-[#8A8A85] uppercase mt-1">
                         Tecnologías

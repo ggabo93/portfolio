@@ -42,6 +42,7 @@ export interface Project {
   result: string;
   whatIWouldImprove: string;
   stack: TechTag[];
+  services?: TechTag[];
   architecture: ProjectArchitecture;
   decisions: ProjectDecision[];
   errors: string[];

@@ -108,11 +108,22 @@ export function ProjectDetail({ project }: Props) {
 
         {/* Stack */}
         <ScrollReveal className="mb-12">
-          <div className="flex flex-wrap gap-1.5">
+          <Label>Stack</Label>
+          <div className="flex flex-wrap gap-1.5 mb-6">
             {project.stack.map((t) => (
               <TechTag key={t} name={t} variant="accent" />
             ))}
           </div>
+          {project.services && project.services.length > 0 && (
+            <>
+              <Label>Servicios integrados</Label>
+              <div className="flex flex-wrap gap-1.5">
+                {project.services.map((t) => (
+                  <TechTag key={t} name={t} variant="muted" />
+                ))}
+              </div>
+            </>
+          )}
         </ScrollReveal>
 
         {/* Problem / Idea / Result grid */}
