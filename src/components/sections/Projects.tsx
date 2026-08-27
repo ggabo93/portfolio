@@ -72,7 +72,7 @@ export function Projects() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 mb-2.5">
                     {project.stack.slice(0, 4).map((t) => (
                       <TechTag key={t} name={t} />
                     ))}
@@ -80,6 +80,16 @@ export function Projects() {
                       <TechTag name={`+${project.stack.length - 4}`} variant="muted" />
                     )}
                   </div>
+                  {project.services && project.services.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="font-mono text-[9px] tracking-[0.08em] text-[#A8A8A3] uppercase mr-0.5">
+                        Servicios:
+                      </span>
+                      {project.services.map((t) => (
+                        <TechTag key={t} name={t} variant="muted" />
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Right col: metric strip */}
