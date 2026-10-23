@@ -1,289 +1,132 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Clock, Play } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { TechTag } from "@/components/ui/TechTag";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { ProjectGallery } from "@/components/project/ProjectGallery";
+import { ShareButton } from "@/components/ui/ShareButton";
+import { projectStatusLabels } from "@/lib/project-status";
 
-interface Props {
-  project: Project;
-}
-
-const heroImages: Record<string, string> = {
-  "teci-prestamos": "/projects/teci/hero.png",
-  misoderia: "/projects/misoderia/hero.png",
-};
-
-const galleryImages: Record<string, [string, string]> = {
-  "teci-prestamos": ["/projects/teci/gallery-1.png", "/projects/teci/gallery-2.png"],
-  misoderia: ["/projects/misoderia/gallery-1.png", "/projects/misoderia/gallery-2.png"],
-};
-
-const videoSrc: Record<string, string> = {
-  "teci-prestamos": "/videos/teci.mp4",
-  misoderia: "/videos/misoderia.mp4",
-};
-
-function Label({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="font-mono text-[11px] font-medium tracking-[0.18em] uppercase text-[#8C8C88]">
-      {children}
-    </div>
-  );
-}
-
-function Row({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10 py-10 border-b border-[rgba(255,255,255,0.1)]">
-      <Label>{label}</Label>
-      <div className="md:col-span-2">{children}</div>
-    </div>
-  );
-}
-
-function Statement({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="font-sans text-[16px] md:text-[19px] text-[#F5F5F3]/90 leading-[1.6] font-normal">{children}</p>
-  );
-}
+interface Props { project: Project }
 
 export function ProjectDetail({ project }: Props) {
-  const image = heroImages[project.slug];
-  const gallery = galleryImages[project.slug];
-  const video = videoSrc[project.slug];
-
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-[#F5F5F3]">
-      {/* Nav */}
-      <header className="fixed top-0 left-0 right-0 z-50" style={{ mixBlendMode: "difference" }}>
-        <div className="max-w-[1180px] mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
-          <Link
-            href="/#projects"
-            className="flex items-center gap-2 font-sans text-[13px] text-[#F5F5F3] hover:opacity-60 transition-opacity"
-          >
-            <ArrowLeft size={14} />
-            Proyectos
-          </Link>
-          {project.url && (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 font-mono text-[11px] text-[#F5F5F3] hover:opacity-60 transition-opacity"
-            >
-              <ExternalLink size={12} />
-              ver sitio
-            </a>
-          )}
-        </div>
+    <>
+      <header className="fixed top-0 inset-x-0 z-40 bg-[#0A0A0A]/95 backdrop-blur border-b border-white/10">
+        <nav aria-label="Navegación del proyecto" className="max-w-[1180px] mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+          <Link href="/#projects" className="flex items-center gap-2 text-sm text-[#D4D4CE] hover:text-[#6E9BFF]"><ArrowLeft size={15} /> Proyectos</Link>
+          <Link href="/#contact" className="text-sm text-[#6E9BFF]">Hablemos de tu proyecto</Link>
+        </nav>
       </header>
-
-      {/* Header / hero */}
-      <div className="relative h-screen min-h-[560px] w-full overflow-hidden">
-        {image ? (
-          <Image src={image} alt={project.name} fill priority className="object-cover" sizes="100vw" />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#141414] via-[#0a0a0a] to-[#141414]" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-14 max-w-[1180px] mx-auto w-full"
-        >
-          <div className="flex items-center gap-3 mb-6 flex-wrap">
-            <span className="font-mono text-[11px] text-[#F5F5F3]/70 tracking-[0.2em]">{project.number}</span>
-            <span
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.08em] ${
-                project.status === "production" ? "bg-[rgba(110,155,255,0.14)] text-[#6E9BFF]" : "bg-white/10 text-[#F5F5F3]/70"
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 rounded-full ${project.status === "production" ? "bg-[#6E9BFF]" : "bg-[#F5F5F3]/60"}`} />
-              {project.status === "production" ? "En producción" : "En desarrollo"}
-            </span>
-            <span className="flex items-center gap-1.5 font-mono text-[11px] text-[#F5F5F3]/70">
-              <Clock size={11} />
-              {project.hoursInvested}h invertidas
-            </span>
+      <main id="main-content" className="max-w-[1180px] mx-auto px-6 md:px-12 pt-32 md:pt-40 pb-20">
+        <div className="flex items-center gap-5 flex-wrap mb-8 text-sm">
+          {project.featured && <p className="text-[#6E9BFF]">Proyecto más reciente</p>}
+          <p className="inline-flex items-center gap-2 text-[#B8B8B2]"><span className={`size-1.5 rounded-full ${project.status === "production" ? "bg-[#6E9BFF]" : "bg-[#8C8C88]"}`} />{projectStatusLabels[project.status]}</p>
+        </div>
+        <h1 className="text-[clamp(3rem,9vw,7rem)] font-semibold leading-none tracking-[-0.05em]">{project.name}</h1>
+        {project.nameNote && <p className="text-sm text-[#8C8C88] mt-4">{project.nameNote}</p>}
+        <div className="grid md:grid-cols-[1.6fr_1fr] gap-8 md:gap-16 mt-9">
+          <div>
+            <p className="text-xl md:text-2xl leading-relaxed text-[#D4D4CE] text-balance">{project.tagline}</p>
+            <Link href="/#contact" className="button-primary mt-7">Consultar por un sistema de gestión <ArrowUpRight size={16} /></Link>
           </div>
+          <div className="text-sm text-[#A5A5A0] leading-relaxed md:border-l md:border-white/10 md:pl-8">
+            {project.role && <><h2 className="text-sm text-[#F5F5F3] font-medium mb-2">Mi trabajo</h2><p className="mb-5">{project.role}</p></>}
+            <div className="flex flex-wrap gap-1.5">{project.stack.map((tech) => <TechTag key={tech} name={tech} variant="muted" />)}</div>
+            <div className="flex gap-5 items-center mt-6"><ShareButton />{project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#6E9BFF]">Ver sitio <ExternalLink size={14} /></a>}</div>
+          </div>
+        </div>
 
-          <h1 className="font-sans text-display-xl font-extrabold text-[#F5F5F3] mb-5">{project.name}</h1>
-          <p className="font-sans text-[16px] md:text-[19px] text-[#F5F5F3]/70 leading-[1.6] max-w-2xl">
-            {project.tagline}
-          </p>
-        </motion.div>
-      </div>
+        {project.cover && (
+          <figure className="mt-12 md:mt-16">
+            <div className={`relative overflow-hidden rounded-lg border border-white/15 ${project.featured ? "aspect-[16/10] bg-[#F5F6F7]" : "aspect-video bg-[#17191D]"}`}>
+              <Image src={project.cover.src} alt={project.cover.alt} fill preload sizes="(min-width: 1180px) 1084px, 100vw" className={`object-cover ${project.featured ? "object-top" : ""}`} />
+            </div>
+            {project.mediaNote && <figcaption className="text-xs text-[#A5A5A0] leading-relaxed mt-4 max-w-[800px]">{project.mediaNote}</figcaption>}
+          </figure>
+        )}
 
-      <div className="max-w-[1180px] mx-auto px-6 md:px-12 py-16 md:py-24">
-        {/* Tags */}
-        <ScrollReveal className="mb-4">
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.stack.map((t) => (
-              <TechTag key={t} name={t} variant="accent" />
+        <div className="mt-14 md:mt-20">
+          {[
+            { title: "El problema", text: project.problem },
+            { title: "La solución", text: project.idea },
+            { title: "El sistema en uso", text: project.result },
+          ].map((item) => (
+            <section key={item.title} className="grid md:grid-cols-[1fr_2fr] gap-4 md:gap-16 border-t border-white/10 py-8 md:py-10">
+              <h2 className="text-xl font-medium tracking-tight">{item.title}</h2>
+              <p className="text-base md:text-lg leading-relaxed text-[#B8B8B2]">{item.text}</p>
+            </section>
+          ))}
+        </div>
+
+        {project.highlights && (
+          <section className="mt-16 md:mt-24" aria-labelledby="capabilities-title">
+            <h2 id="capabilities-title" className="text-display-md font-semibold mb-10">Qué permite gestionar</h2>
+            <div className="grid md:grid-cols-2 gap-x-14 gap-y-8">
+              {project.highlights.map((item) => (
+                <article key={item.title} className="border-t border-white/15 pt-6">
+                  <h3 className="text-xl font-medium mb-3">{item.title}</h3>
+                  <p className="text-[15px] text-[#A5A5A0] leading-relaxed">{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {project.gallery && <ProjectGallery images={project.gallery} />}
+        {project.videoDemo && (
+          <section className="mt-16 md:mt-24">
+            <h2 className="text-display-md font-semibold mb-7">Recorrido del producto</h2>
+            <video src={project.videoDemo} controls playsInline preload="none" aria-label={`Recorrido visual de ${project.name}`} className="w-full aspect-video rounded-lg bg-[#141414]" />
+            <p className="mt-3 text-xs text-[#A5A5A0]">Recorrido visual sin narración. Las funciones se describen en esta página.</p>
+          </section>
+        )}
+
+        <section className="mt-16 md:mt-24 border-t border-white/10 pt-10">
+          <h2 className="text-display-md font-semibold mb-7">Cómo está construido</h2>
+          <p className="text-base text-[#A5A5A0] leading-relaxed max-w-[800px] mb-8">{project.architecture.description}</p>
+          <div className="divide-y divide-white/10">
+            {project.architecture.layers.map((layer) => (
+              <div key={layer.name} className="grid sm:grid-cols-[180px_1fr] gap-2 sm:gap-8 py-5">
+                <h3 className="text-base font-medium">{layer.name}</h3>
+                <p className="text-sm text-[#A5A5A0] leading-relaxed">{layer.detail}</p>
+              </div>
             ))}
           </div>
-          {project.services && project.services.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {project.services.map((t) => (
-                <TechTag key={t} name={t} variant="muted" />
-              ))}
-            </div>
-          )}
-        </ScrollReveal>
+        </section>
 
-        {/* Problema / Solución / Resultado */}
-        <div className="mt-12 border-t border-[rgba(255,255,255,0.1)]">
-          <ScrollReveal>
-            <Row label="Problema">
-              <Statement>{project.problem}</Statement>
-            </Row>
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
-            <Row label="Solución">
-              <Statement>{project.idea}</Statement>
-            </Row>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <Row label="Resultado">
-              <Statement>{project.result}</Statement>
-            </Row>
-          </ScrollReveal>
-        </div>
-
-        {/* Video demo */}
-        <ScrollReveal className="mt-16 mb-16">
-          <div className="relative w-full aspect-video rounded-[6px] overflow-hidden surface">
-            {video ? (
-              <video src={video} controls playsInline preload="metadata" className="w-full h-full object-cover" />
-            ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                <div className="w-14 h-14 rounded-full border border-[rgba(255,255,255,0.2)] flex items-center justify-center">
-                  <Play size={18} className="text-[#8C8C88] ml-0.5" />
-                </div>
-                <span className="font-mono text-[11px] tracking-[0.1em] text-[#5A5A57] uppercase">
-                  Video demo próximamente
-                </span>
-              </div>
-            )}
-          </div>
-        </ScrollReveal>
-
-        {/* Gallery */}
-        {gallery && (
-          <ScrollReveal className="mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[rgba(255,255,255,0.1)] rounded-[6px] overflow-hidden">
-              {gallery.map((src) => (
-                <div key={src} className="relative aspect-square bg-[#141414]">
-                  <Image src={src} alt={project.name} fill className="object-cover" sizes="(min-width: 768px) 590px, 100vw" />
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        )}
-
-        {/* Architecture */}
-        <ScrollReveal className="mb-4">
-          <div className="surface rounded-[6px] p-7 md:p-9">
-            <Label>Arquitectura</Label>
-            <p className="font-sans text-[14px] text-[#8C8C88] leading-relaxed mt-5 mb-7">
-              {project.architecture.description}
-            </p>
-            <div className="space-y-4">
-              {project.architecture.layers.map((layer, i) => (
-                <div key={i} className="flex flex-col md:flex-row gap-1.5 md:gap-5 md:items-baseline">
-                  <span className="font-mono text-[11px] text-[#6E9BFF] md:w-40 flex-shrink-0">{layer.name}</span>
-                  <span className="font-sans text-[13.5px] text-[#8C8C88] leading-relaxed">{layer.detail}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Decisions */}
         {project.decisions.length > 0 && (
-          <ScrollReveal className="mb-4">
-            <div className="surface rounded-[6px] p-7 md:p-9">
-              <Label>Decisiones técnicas</Label>
-              <div className="space-y-7 mt-6">
-                {project.decisions.map((d, i) => (
-                  <div key={i} className={i > 0 ? "pt-7 border-t border-[rgba(255,255,255,0.1)]" : ""}>
-                    <p className="font-sans text-[14.5px] text-[#F5F5F3] font-medium mb-4">{d.question}</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-                      <div className="rounded-[5px] bg-[rgba(110,155,255,0.08)] border border-[rgba(110,155,255,0.2)] p-4">
-                        <p className="font-mono text-[9px] text-[#6E9BFF] tracking-widest uppercase mb-2">elegido</p>
-                        <p className="font-sans text-[12.5px] text-[#F5F5F3]/80 leading-relaxed">{d.chosen}</p>
-                      </div>
-                      <div className="rounded-[5px] bg-white/[0.03] border border-[rgba(255,255,255,0.1)] p-4">
-                        <p className="font-mono text-[9px] text-[#5A5A57] tracking-widest uppercase mb-2">descartado</p>
-                        <p className="font-sans text-[12.5px] text-[#8C8C88] leading-relaxed">{d.rejected}</p>
-                      </div>
-                    </div>
-                    <p className="font-sans text-[13px] text-[#8C8C88] leading-relaxed pl-1">↳ {d.reason}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+          <section className="mt-16">
+            <h2 className="text-2xl font-semibold tracking-tight mb-6">Decisiones del proyecto</h2>
+            {project.decisions.map((decision) => (
+              <details key={decision.question} className="border-t border-white/10 py-5 group">
+                <summary className="cursor-pointer text-base font-medium pr-4">{decision.question}</summary>
+                <div className="mt-5 space-y-3 text-[15px] text-[#A5A5A0] leading-relaxed max-w-[850px]">
+                  <p><span className="text-[#D4D4CE]">Decisión: </span>{decision.chosen}</p>
+                  <p><span className="text-[#D4D4CE]">Alternativa evaluada: </span>{decision.rejected}</p>
+                  <p>{decision.reason}</p>
+                </div>
+              </details>
+            ))}
+          </section>
         )}
-
-        {/* Errors */}
         {project.errors.length > 0 && (
-          <ScrollReveal className="mb-4">
-            <div className="surface rounded-[6px] p-7 md:p-9">
-              <Label>Errores reales · lo que salió mal</Label>
-              <div className="space-y-3 mt-6">
-                {project.errors.map((err, i) => (
-                  <div key={i} className="flex gap-3 items-start">
-                    <span className="font-mono text-[10px] text-[#6E9BFF] mt-0.5 flex-shrink-0">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="font-sans text-[13.5px] text-[#8C8C88] leading-relaxed">{err}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+          <details className="border-y border-white/10 py-5 mt-8">
+            <summary className="cursor-pointer text-base font-medium">Aprendizajes durante el desarrollo</summary>
+            <ul className="mt-5 space-y-4 list-disc pl-5 text-sm text-[#A5A5A0] leading-relaxed">{project.errors.map((error) => <li key={error}>{error}</li>)}</ul>
+          </details>
         )}
-
-        {/* What I'd improve */}
-        <ScrollReveal className="mb-4">
-          <div className="surface rounded-[6px] p-7 md:p-9">
-            <Label>Qué mejoraría</Label>
-            <p className="font-sans text-[13.5px] text-[#8C8C88] leading-relaxed mt-5">
-              {project.whatIWouldImprove}
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Footer nav */}
-        <ScrollReveal className="mt-12">
-          <div className="flex items-center justify-between pt-8 border-t border-[rgba(255,255,255,0.1)]">
-            <Link
-              href="/#projects"
-              className="flex items-center gap-2 font-mono text-[11px] text-[#8C8C88] hover:text-[#F5F5F3] transition-colors"
-            >
-              <ArrowLeft size={12} />
-              Todos los proyectos
-            </Link>
-            {project.url && (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 font-mono text-[11px] text-[#6E9BFF] hover:opacity-70 transition-opacity"
-              >
-                Ver en producción
-                <ExternalLink size={12} />
-              </a>
-            )}
-          </div>
-        </ScrollReveal>
-      </div>
-    </div>
+        <section className="mt-14 border-t border-white/10 pt-8">
+          <h2 className="text-2xl font-semibold tracking-tight mb-4">Próximos pasos</h2>
+          <p className="text-base text-[#A5A5A0] leading-relaxed max-w-[800px]">{project.whatIWouldImprove}</p>
+        </section>
+        <div className="mt-20 p-7 md:p-10 bg-[#14171C] rounded-lg">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">¿Tu operación necesita una herramienta propia?</h2>
+          <p className="text-[#A5A5A0] leading-relaxed mt-4 mb-7 max-w-[640px]">Podemos empezar por el proceso que hoy te lleva más trabajo: clientes, cobros, inventario o seguimiento de la operación.</p>
+          <Link href="/#contact" className="button-primary">Contame qué necesitás <ArrowUpRight size={16} /></Link>
+        </div>
+        <Link href="/#projects" className="inline-flex items-center gap-2 mt-10 text-sm text-[#A5A5A0] hover:text-[#6E9BFF]"><ArrowLeft size={15} /> Todos los proyectos</Link>
+      </main>
+    </>
   );
 }

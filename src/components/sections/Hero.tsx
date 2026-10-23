@@ -1,58 +1,40 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="hero" className="min-h-screen flex flex-col justify-end px-6 md:px-12 pb-14 relative overflow-hidden">
-      <div className="relative z-10 max-w-[1180px] mx-auto w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-2.5 font-mono text-[12px] tracking-[0.14em] text-[#8C8C88] uppercase mb-8"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#6E9BFF] animate-pulse-accent" />
-          Disponible · Córdoba, Argentina
-        </motion.div>
-
-        <h1 className="font-sans text-display-xl font-extrabold text-[#F5F5F3] mb-10">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-            className="block"
-          >
-            Construyo
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
-            className="block"
-          >
-            productos con IA.
-          </motion.span>
+    <section id="hero" className="px-6 md:px-12 pt-36 md:pt-48 pb-16 md:pb-24">
+      <div className="max-w-[1180px] mx-auto">
+        <p className="flex items-center gap-3 text-sm text-[#A5A5A0] mb-10">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#6E9BFF]" />
+          Gabriel González · Desarrollador de sistemas de gestión
+        </p>
+        <h1 className="text-[clamp(2.8rem,7.4vw,7rem)] leading-[1.02] tracking-[-0.055em] font-semibold max-w-[1100px] text-balance">
+          Herramientas para<br className="hidden sm:block" /> gestionar mejor.
         </h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="font-sans text-[16px] md:text-[18px] text-[#8C8C88] font-normal max-w-[520px] leading-[1.6]"
-        >
-          Full-stack, de la idea al deploy en producción — con clientes reales en Córdoba, Argentina.
-        </motion.p>
+        <div className="grid md:grid-cols-[1fr_auto] gap-9 md:gap-20 items-end mt-10 md:mt-14">
+          <div>
+            <p className="text-base md:text-xl leading-relaxed text-[#A5A5A0] max-w-[640px]">
+              Desarrollo sistemas que ordenan la operación de un negocio:
+              clientes, cobros, inventario y reportes. Del relevamiento a la puesta
+              en producción, con seguimiento y mejoras sobre el uso real.
+            </p>
+            <div className="flex flex-wrap gap-4 mt-8">
+              <a href="#projects" className="button-primary">Ver proyectos <ArrowDown size={16} /></a>
+              <a href="#contact" className="button-secondary">Hablemos de tu negocio <ArrowUpRight size={16} /></a>
+            </div>
+          </div>
+          <p className="text-sm text-[#8C8C88] md:text-right leading-relaxed">
+            Córdoba, Argentina<br />
+            <Link href="/#about" className="text-[#D4D4CE] underline underline-offset-4 decoration-white/20 hover:text-[#6E9BFF]">Procesos, datos y desarrollo</Link>
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-x-9 gap-y-3 border-t border-white/10 pt-6 mt-12 md:mt-16 text-sm text-[#A5A5A0]">
+          <span>Gestión de clientes y membresías</span>
+          <span>Cobros y cuentas corrientes</span>
+          <span>Operaciones y reportes</span>
+        </div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 1.1 }}
-        className="absolute bottom-9 left-6 md:left-12 flex items-center gap-3"
-      >
-        <span className="font-mono text-[11px] tracking-[0.12em] text-[#8C8C88] uppercase">Scroll ↓</span>
-      </motion.div>
     </section>
   );
 }

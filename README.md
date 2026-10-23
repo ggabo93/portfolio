@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio de Gabriel González
 
-## Getting Started
+Portfolio orientado al desarrollo de sistemas de gestión para negocios. Incluye proyectos, casos de implementación, experiencia laboral, formación y contacto.
 
-First, run the development server:
+## Desarrollo
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Verificación
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Next.js 16.2.9, React 19, TypeScript y Tailwind CSS 4. Consultar `AGENTS.md` y las guías locales en `node_modules/next/dist/docs/` antes de modificar convenciones del framework.
 
-## Learn More
+## Contenido
 
-To learn more about Next.js, take a look at the following resources:
+- `src/lib/data/projects.ts`: proyectos, orden, estado, funciones y medios. GymAdmin es el caso destacado y su nombre sigue siendo provisional.
+- `src/components/sections/About.tsx`: perfil, experiencia y formación basados en los CV locales.
+- `public/projects/`: imágenes públicas. Las nuevas capturas de GymAdmin provienen de componentes reales con datos ficticios.
+- `src/lib/site.ts`: URL pública. Configurar `NEXT_PUBLIC_SITE_URL` con el dominio canónico al cambiar de dominio.
+- `src/app/sitemap.ts`, `robots.ts` y `opengraph-image.tsx`: descubrimiento y vista previa al compartir.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contacto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+El endpoint de contacto utiliza `RESEND_API_KEY`, configurada exclusivamente en el entorno del servidor. No incluir archivos de entorno ni credenciales en Git.
 
-## Deploy on Vercel
+## Publicación
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Las verificaciones locales no confirman un despliegue. El seguimiento en Google Search Console y Analytics requiere las cuentas y configuración del propietario; no se añaden identificadores ficticios.

@@ -1,0 +1,16 @@
+# Gabriel González — Desarrollo de sistemas de gestión
+
+Portfolio de un desarrollador de sistemas de gestión en Córdoba, Argentina.
+Herramientas para ordenar clientes, membresías, cobros, inventario y reportes.
+
+## Proyectos
+- [GymAdmin](/projects/gymadmin): nombre provisional de un sistema para gimnasios, en producción. Socios, membresías, caja, cobros, rutinas y control de acceso.
+- [TECI Préstamos](/projects/teci-prestamos): captación y administración de préstamos; proyecto en pausa, con sitio público en mantenimiento.
+- [MiSodería](/projects/misoderia): producto de gestión de distribución en desarrollo.
+- [Capitl](/projects/capitl): gestión financiera interna.
+- [Celestina](/projects/celestina): gestión de distribución y reparto.
+
+## Experiencia
+Desarrollo independiente, operaciones en Celestina y experiencia en calidad industrial en Renault.
+La página principal incluye experiencia laboral, formación y contacto.
+Las capturas de GymAdmin usan datos ficticios y no representan métricas comerciales.

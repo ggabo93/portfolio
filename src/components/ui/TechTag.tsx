@@ -7,7 +7,7 @@ export function TechTag({ name, variant = "default" }: TechTagProps) {
   const styles = {
     default: "bg-transparent border border-[rgba(255,255,255,0.1)] text-[#8C8C88]",
     accent: "bg-[rgba(110,155,255,0.12)] border border-[rgba(110,155,255,0.28)] text-[#6E9BFF]",
-    muted: "bg-transparent border border-[rgba(255,255,255,0.1)] text-[#5A5A57]",
+    muted: "bg-transparent border border-[rgba(255,255,255,0.15)] text-[#A5A5A0]",
   };
 
   return (

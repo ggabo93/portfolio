@@ -2,18 +2,87 @@ import type { Project } from "@/lib/types";
 
 export const projects: Project[] = [
   {
+    slug: "gymadmin",
+    number: "05",
+    name: "GymAdmin",
+    tagline: "La operación del gimnasio en un solo sistema: socios, membresías, cobros, caja y control de acceso.",
+    featured: true,
+    nameNote: "Nombre provisional · Sistema de gestión para gimnasios",
+    role: "Relevamiento, diseño de la experiencia, desarrollo full stack, implementación y mantenimiento evolutivo.",
+    cover: { src: "/projects/gymadmin/administracion.png", alt: "Administración de GymAdmin con resumen mensual, vencimientos y caja; datos ficticios" },
+    mediaNote: "Capturas de la aplicación y sus componentes reales en entornos de prueba. Los nombres, documentos e importes son ficticios; las cifras ilustran la interfaz y no representan resultados del negocio. Fénix es la identidad de una instalación, no la marca de la plataforma.",
+    gallery: [
+      { src: "/projects/gymadmin/recepcion.png", alt: "Recepción de GymAdmin con búsqueda de socio, indicadores y últimos ingresos de prueba", caption: "Recepción: búsqueda de socios y seguimiento de ingresos. Consultar un documento no registra una asistencia.", width: 1440, height: 1009 },
+      { src: "/projects/gymadmin/seguimiento.png", alt: "Componente de administración con saldos, membresías vencidas y próximos vencimientos usando datos ficticios", caption: "Seguimiento operativo: desde una alerta se accede al socio que necesita atención, sin revisar fichas una por una.", width: 1326, height: 508 },
+      { src: "/projects/gymadmin/reportes.png", alt: "Reportes de prueba de GymAdmin con cobros, cargos internos, socios y asistencia por período", caption: "Reportes: cobros, cargos internos, saldos y asistencia. Cada indicador distingue la situación actual del período consultado.", width: 1440, height: 1423 },
+    ],
+    highlights: [
+      { title: "Recepción y asistencia", description: "Consulta de socios, vigencia del plan y cupo semanal. El ingreso requiere una acción explícita y confirmación; buscar o abrir una ficha no genera asistencias accidentales." },
+      { title: "Membresías y renovaciones", description: "Planes, vigencias y contratos históricos. La renovación conserva las condiciones acordadas y registra el pago en la misma operación, con protección frente a reintentos." },
+      { title: "Cobros y caja diaria", description: "Pagos parciales, saldos, comprobantes imprimibles y cierres de caja por medio de pago. El historial permite seguir qué se cobró y qué continúa pendiente." },
+      { title: "Seguimiento y reportes", description: "Socios con saldo, membresías vencidas y próximos vencimientos enlazados a sus fichas. Reportes por período, exportación a CSV y registro de actividad para acompañar la administración." },
+      { title: "Rutinas compartidas", description: "Plantillas, borradores y versiones publicadas. Cada rutina se puede consultar desde un enlace revocable o descargar como PDF a partir de la misma versión." },
+      { title: "Acceso autónomo opcional", description: "Integración con teclado, pantalla de ingreso y controlador de puerta. El acceso local dispone de respaldo de hasta 24 horas con una copia vigente; la administración web sigue necesitando conexión." },
+    ],
+    category: "gestión",
+    status: "production",
+    problem: "En un gimnasio, recepción y administración necesitan trabajar con la misma información: quién tiene un plan vigente, quién puede ingresar, qué se cobró y qué queda pendiente. Si membresías, pagos y asistencias no se mantienen consistentes, aparecen renovaciones duplicadas, saldos difíciles de explicar y tareas que dependen de revisar cada ficha por separado.",
+    idea: "Construir una herramienta que acompañe el trabajo diario: recepción para consultar y registrar ingresos, fichas para gestionar membresías y pagos, y una administración que reúna caja, alertas e indicadores. Las reglas de vigencia, cupos y cobros se validan en el servidor y cada operación conserva su historial.",
+    result: "Sistema en producción en Gimnasio Fénix, con gestión de socios, planes, renovaciones, cobros, caja diaria, rutinas y control de acceso. La administración permite identificar saldos y vencimientos, abrir la ficha correspondiente y exportar información. Los reportes distinguen cargos internos, dinero cobrado, saldos y asistencias por período. El producto continúa evolucionando con mejoras en la recepción, la fecha real de los pagos y el seguimiento de pendientes.",
+    whatIWouldImprove: "Medir los tiempos de atención y la utilidad de los reportes en la operación diaria, recoger comentarios de usuarios y priorizar mejoras a partir de esos resultados.",
+    stack: ["Next.js", "TypeScript", "PostgreSQL", "Supabase", "Tailwind", "Zod"],
+    architecture: {
+      description: "Aplicación web en Next.js y TypeScript, con PostgreSQL y Supabase para autenticación y persistencia. El servidor concentra las reglas de negocio y los permisos por gimnasio. Un componente local independiente permite integrar el acceso físico y su respaldo limitado sin entregar permisos administrativos a la terminal.",
+      layers: [
+        { name: "Operación", detail: "Socios, planes, contratos, asistencias, cobros e historial de movimientos." },
+        { name: "Acceso de socios", detail: "Control de acceso vinculado a la gestión de socios y sus membresías." },
+        { name: "Integridad", detail: "Renovación y pago atómicos, protección ante reintentos y validaciones de consistencia en la base." },
+        { name: "Reportes", detail: "Indicadores calculados en SQL con definiciones explícitas para períodos, saldos y comparaciones; exportaciones para seguimiento operativo." },
+        { name: "Permisos", detail: "Sesión y pertenencia por gimnasio, RLS y reportes financieros limitados al administrador." },
+      ],
+    },
+    decisions: [
+      {
+        question: "¿Cómo evitar que una consulta registre un ingreso por error?",
+        chosen: "Separar la búsqueda del socio de la acción de ingreso y revalidar al confirmar.",
+        rejected: "Registrar una asistencia automáticamente al consultar el documento.",
+        reason: "Recepción necesita poder revisar una ficha sin alterar el historial. Una solicitud de apertura tampoco equivale a un cruce físico confirmado.",
+      },
+      {
+        question: "¿Qué pasa si se repite una renovación o un cobro?",
+        chosen: "Operaciones atómicas y protección frente a reintentos, con historial conservado.",
+        rejected: "Crear el contrato y su pago como acciones independientes sin control de duplicados.",
+        reason: "Una respuesta perdida o un doble clic no deberían generar dos pagos ni dejar una membresía a medio registrar.",
+      },
+      {
+        question: "¿Cómo mantener consistentes los indicadores?",
+        chosen: "Calcularlos desde cargos, pagos y asistencias con definiciones documentadas.",
+        rejected: "Mezclar saldos actuales con resultados históricos sin distinguir su alcance.",
+        reason: "Cada indicador debe mostrar qué mide, qué período utiliza y cómo puede verificarse contra los registros de origen.",
+      },
+    ],
+    errors: [],
+    startedAt: "2026-09-30",
+  },
+  {
     slug: "teci-prestamos",
     number: "01",
     name: "TECI∞ Préstamos",
+    cover: { src: "/projects/teci/hero.png", alt: "Presentación de TECI Préstamos y su sistema de gestión" },
+    gallery: [
+      { src: "/projects/teci/gallery-1.png", alt: "Vista del producto TECI Préstamos", caption: "Captación y seguimiento de solicitudes.", width: 1600, height: 900 },
+      { src: "/projects/teci/gallery-2.png", alt: "Panel de gestión de TECI Préstamos", caption: "Administración de la operación crediticia.", width: 1600, height: 900 },
+    ],
+    videoDemo: "/videos/teci.mp4",
     tagline: "Plataforma fintech de originación y gestión de préstamos (LOS + LMS) para una financiera argentina.",
     category: "fintech",
-    status: "production",
+    status: "paused",
     problem:
       "Una financiera de Córdoba se lanzaba desde cero y no tenía ningún canal digital: sin landing, sin captura de leads, sin evaluación crediticia y sin forma de gestionar préstamos más allá de un Excel y WhatsApp informal. La alternativa del mercado era alquilar un software de gestión para financieras con licencia mensual y contrato de permanencia — pagando por integraciones con terceros que en realidad se pueden contratar directo.",
     idea:
       "Construir a medida la plataforma completa en vez de alquilarla: originación (LOS) —landing que simula el préstamo, captura el lead y corre un filtro crediticio automático— y gestión/servicing (LMS) —alta de préstamos, cronograma de cuotas, cobranza y mora. Con un motor de decisión crediticia que consulta la Central de Deudores del BCRA (API pública y gratuita) para pre-aprobar o rechazar en el momento, y un diseño de cobros agnóstico de proveedor para no quedar atado a ningún gateway.",
     result:
-      "Plataforma en producción en teciprestamos.com.ar. Originación: landing con simulador, captura de leads y filtro crediticio BCRA que auto-rutea cada solicitud (rechaza situación 4-5, deriva a revisión, deja pasar) y le responde al cliente al instante. Gestión: generación de préstamos con cronograma de cuotas, cobranza con seguimiento de mora (cron diario), caja con saldo real y registro de desembolso, más un portal donde el solicitante retoma su onboarding si quedó pendiente. Panel admin con dashboard de KPIs (gráficos con Recharts), tabla de leads en Realtime, tablas con TanStack Table, exports CSV/Excel/PDF, emails transaccionales y páginas legales publicadas. Como el sistema pasó a manejar dinero real y datos sensibles, se hizo una auditoría de seguridad completa y una segunda pasada de hardening: todas las lecturas del panel dejaron de usar el service_role y pasan por RLS real, el cobro de cuotas se volvió atómico (cerraba una condición de carrera que permitía cobrar la misma cuota dos veces), guardar la Configuración del sistema pide un segundo factor TOTP en el momento (no solo al loguearse), y los tokens de onboarding quedan hasheados en la base y expiran — antes vivían en texto plano sin vencimiento. Reemplazó una cotización de software de terceros por un sistema propio, sin costo de licencia mensual ni lock-in. Como línea de negocio nueva del mismo cliente, se sumó una segunda landing —cambio de cheques— en un subdominio propio (cheques.teciprestamos.com.ar), desarrollada en una rama separada para no tocar la plataforma de préstamos en producción.",
+      "Plataforma desarrollada y puesta en producción para captar solicitudes y administrar préstamos, cuotas, cobranzas y caja. Incluye simulador, evaluación inicial, panel de seguimiento y reportes. El proyecto se encuentra actualmente en pausa, con el sitio público en mantenimiento; se conserva como caso de desarrollo e implementación.",
     whatIWouldImprove:
       "Integrar Nosis/Veraz como capa de scoring paga sobre el filtro BCRA gratuito. Enchufar el gateway de débito recurrente (el diseño ya es agnóstico) y firma electrónica para el onboarding. CMS headless para que el cliente edite tasas sin código.",
     stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Tailwind", "Radix UI", "TanStack Table", "Recharts"],
@@ -78,7 +147,13 @@ export const projects: Project[] = [
     slug: "misoderia",
     number: "04",
     name: "MiSodería",
-    tagline: "SaaS multi-tenant para distribuidoras de agua y soda — producto propio nacido de Celestina, ya con marca, diseño premium y testing real.",
+    cover: { src: "/projects/misoderia/hero.png", alt: "Capturas de MiSodería en escritorio y celular" },
+    gallery: [
+      { src: "/projects/misoderia/gallery-1.png", alt: "Administración de MiSodería", caption: "Clientes, cuentas y operación desde el panel administrativo.", width: 1600, height: 900 },
+      { src: "/projects/misoderia/gallery-2.png", alt: "Vista móvil de MiSodería para repartidores", caption: "Ruta y registro de entregas desde el celular.", width: 1200, height: 1200 },
+    ],
+    videoDemo: "/videos/misoderia.mp4",
+    tagline: "Gestión para distribuidoras de agua y soda: clientes, abonos, inventario, rutas y cobranzas, con información separada por empresa.",
     category: "saas",
     status: "building",
     problem:
@@ -86,7 +161,7 @@ export const projects: Project[] = [
     idea:
       "Fork de Celestina reescrito como SaaS multi-tenant real —una sola base de datos y un solo deploy sirven a todas las distribuidoras, aisladas entre sí por Row Level Security— y relanzado como producto con nombre propio: MiSodería. Tenancy y rol viajan firmados en el token de sesión vía un Custom Access Token Hook, con un motor de facturación server-side (pg_cron) y un panel de operador de plataforma sin acceso directo a datos de tenants. Sobre esa base, un rediseño visual premium completo y una suite de tests automatizados sobre la lógica de negocio más sensible: la plata.",
     result:
-      "Producto multi-tenant funcional y ya rebrandeado como MiSodería, con logo y sistema de diseño propio. Rediseño premium completo —inspirado en Linear/Stripe, con tema claro/oscuro real— sobre las cuatro superficies del producto: panel admin, vista del repartidor, panel de plataforma y versión mobile (11 pantallas). Un mismo repartidor puede tener ruta, caja e historial separados dentro de la misma empresa multi-tenant. Los flujos de contraseña se endurecieron: cambio obligatorio en el primer login tras un alta o un reset, y el admin de cada distribuidora puede resetear la contraseña de sus propios repartidores sin pedirme ayuda. La facturación granula cada cobro en abono, adicional y extras, y el catálogo de productos ahora se puede vender en cualquier entrega, no solo en Venta Directa. Y lo más importante para un sistema que maneja plata de terceros: se sumó una suite de tests con Vitest que cubre el motor de facturación (facturar_cliente, sincronizar_mensualidades, absorción de crédito), aislamiento entre tenants por RLS e idempotencia del cron — cada caso de test cita la regla de negocio que protege, para saber qué se rompió si alguna vez falla.",
+      "Producto multi-tenant funcional y ya rebrandeado como MiSodería, con logo y sistema de diseño propio. Rediseño premium completo —inspirado en Linear/Stripe, con tema claro/oscuro real— sobre las cuatro superficies del producto: panel admin, vista del repartidor, panel de plataforma y versión mobile (11 pantallas). Un mismo repartidor puede tener ruta, caja e historial separados dentro de la misma empresa multi-tenant. Los flujos de contraseña se endurecieron: cambio obligatorio en el primer login tras un alta o un reset, y el admin de cada distribuidora puede resetear la contraseña de sus propios repartidores sin pedirme ayuda. La operación de rutas prioriza la venta directa y permite agrupar el recorrido administrativo por repartidor. La facturación granula cada cobro en abono, adicional y extras, y el catálogo de productos ahora se puede vender en cualquier entrega, no solo en Venta Directa. Y lo más importante para un sistema que maneja plata de terceros: se sumó una suite de tests con Vitest que cubre el motor de facturación (facturar_cliente, sincronizar_mensualidades, absorción de crédito), aislamiento entre tenants por RLS e idempotencia del cron — cada caso de test cita la regla de negocio que protege, para saber qué se rompió si alguna vez falla.",
     whatIWouldImprove:
       "Flujo de self-service para que una distribuidora nueva se dé de alta sola, sin intervención manual del operador. Panel de planes/facturación para que la comercialización sea autogestionada, no manual por mi parte. Sumar cobertura de tests end-to-end sobre los flujos de UI, no solo sobre la lógica de negocio pura.",
     stack: ["React", "Vite", "Supabase", "PostgreSQL", "Tailwind", "Vitest"],
@@ -135,7 +210,7 @@ export const projects: Project[] = [
     slug: "capitl",
     number: "02",
     name: "Capitl",
-    tagline: "Back-office de servicing y tesorería —cuotas, mora, caja multi-moneda y represtamistas— para una financiera ya en operación.",
+    tagline: "Gestión interna para una financiera: clientes, préstamos, cuotas, mora y caja en pesos y dólares.",
     category: "saas",
     status: "production",
     problem:
@@ -175,7 +250,7 @@ export const projects: Project[] = [
     slug: "celestina",
     number: "03",
     name: "Celestina",
-    tagline: "APP de gestión + bot de WhatsApp para una distribuidora de agua.",
+    tagline: "Gestión de una distribuidora de agua: pedidos, inventario, reparto, cuentas corrientes y seguimiento de cobranzas.",
     category: "gestión",
     status: "production",
     problem:
@@ -183,7 +258,7 @@ export const projects: Project[] = [
     idea:
       "App web mobile-first con dos módulos diferenciados: panel administrativo completo para el dueño (clientes, almacén, caja, comisiones e historial) y vista de reparto para el repartidor (ruta del día, confirmación de entregas y registro de pagos). Más un bot de WhatsApp que corre automáticamente: avisa a clientes sin consumo en 14 días y recuerda deudas vencidas.",
     result:
-      "App en producción con roles diferenciados. El administrador opera desde el panel con visibilidad total de la operación; el repartidor accede solo a su vista de ruta desde el celular. El bot de WhatsApp corre diariamente en Render con Docker y reemplazó el seguimiento manual. Las cobranzas vencidas y el seguimiento de clientes inactivos que antes dependían de revisar el Excel hoy son automáticos. Iteración constante desde el lanzamiento: historial global de transacciones, filtro por mes para ver quién debe qué período puntual, y una corrección de un bug de coma flotante que bloqueaba retiros de caja del repartidor cuando el monto no cerraba exacto. También se sumó un registro independiente para la planta llenadora externa que le provee los bidones al cliente, con su propio stock separado del inventario general. Después: fecha de instalación editable como ancla fija del ciclo de facturación mensual (antes se recalculaba y corría la fecha de cobro), comisión de repartidor configurable por cliente en vez de un porcentaje fijo global, y baja definitiva de clientes cuando hace falta borrar en vez de solo pausar.",
+      "App en producción con roles diferenciados. El administrador opera desde el panel con visibilidad total de la operación; el repartidor accede solo a su vista de ruta desde el celular. El bot de WhatsApp corre diariamente en Render con Docker y reemplazó el seguimiento manual. Las cobranzas vencidas y el seguimiento de clientes inactivos que antes dependían de revisar el Excel hoy son automáticos. Iteración constante desde el lanzamiento: historial global de transacciones, filtro por mes para ver quién debe qué período puntual, y una corrección de un bug de coma flotante que bloqueaba retiros de caja del repartidor cuando el monto no cerraba exacto. La programación mensual de entregas contempla el día preferido del cliente y la última entrega confirmada, y se reprograma cuando cambia esa preferencia. También se sumó un registro independiente para la planta llenadora externa que le provee los bidones al cliente, con su propio stock separado del inventario general. Después: fecha de instalación editable como ancla fija del ciclo de facturación mensual (antes se recalculaba y corría la fecha de cobro), comisión de repartidor configurable por cliente en vez de un porcentaje fijo global, y baja definitiva de clientes cuando hace falta borrar en vez de solo pausar.",
     whatIWouldImprove:
       "Migrar el bot a WhatsApp Business API oficial para eliminar el riesgo de ban. Agregar geotracking en tiempo real para seguimiento de rutas. Convertir la app en una aplicación nativa (React Native) para mejor experiencia del repartidor en campo. Dashboard de métricas de cobranza y eficiencia de rutas.",
     stack: ["React", "Vite", "Supabase", "Node.js"],

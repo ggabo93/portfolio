@@ -35,6 +35,13 @@ export interface Project {
   number: string;
   name: string;
   tagline: string;
+  featured?: boolean;
+  nameNote?: string;
+  role?: string;
+  highlights?: { title: string; description: string }[];
+  cover?: { src: string; alt: string };
+  gallery?: { src: string; alt: string; caption: string; width: number; height: number }[];
+  mediaNote?: string;
   category: ProjectCategory;
   status: ProjectStatus;
   problem: string;
@@ -46,7 +53,7 @@ export interface Project {
   architecture: ProjectArchitecture;
   decisions: ProjectDecision[];
   errors: string[];
-  hoursInvested: number;
+  hoursInvested?: number;
   url?: string;
   repo?: string;
   videoDemo?: string;

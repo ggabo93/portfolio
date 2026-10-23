@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -45,7 +44,7 @@ export function Contact() {
   return (
     <section id="contact" className="py-section px-6 md:px-12">
       <div className="max-w-[1180px] mx-auto">
-        <ScrollReveal>
+        <div>
           <div className="font-mono text-[12px] tracking-[0.14em] text-[#8C8C88] uppercase mb-8">
             Contacto
           </div>
@@ -53,11 +52,12 @@ export function Contact() {
             Trabajemos juntos.
           </h2>
           <p className="font-sans text-[15px] sm:text-[16px] text-[#8C8C88] leading-[1.6] mb-12 max-w-[480px]">
-            Contame sobre tu proyecto o idea y lo convertimos en un producto real.
+            Contame cómo trabajás hoy y qué necesitás ordenar: clientes, cobros,
+            inventario, reportes o una tarea que seguís resolviendo a mano.
           </p>
-        </ScrollReveal>
+        </div>
 
-        <ScrollReveal delay={0.06}>
+        <div>
           <form onSubmit={handleSubmit} className="max-w-[560px] grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
             {/* Honeypot, oculto para humanos */}
             <input
@@ -69,14 +69,15 @@ export function Contact() {
               className="hidden"
             />
 
-            <input name="name" required placeholder="Tu nombre" className={inputClass} />
-            <input name="projectName" placeholder="Nombre del proyecto" className={inputClass} />
-            <input name="email" type="email" required placeholder="Tu email" className={`${inputClass} sm:col-span-2`} />
+            <input name="name" aria-label="Tu nombre" autoComplete="name" required placeholder="Tu nombre" className={inputClass} />
+            <input name="projectName" aria-label="Nombre del negocio o proyecto" placeholder="Negocio o proyecto" className={inputClass} />
+            <input name="email" aria-label="Tu email" autoComplete="email" type="email" required placeholder="Tu email" className={`${inputClass} sm:col-span-2`} />
             <textarea
               name="message"
+              aria-label="Qué necesitás resolver"
               required
               rows={4}
-              placeholder="Contame en qué estás pensando..."
+              placeholder="¿Qué necesitás resolver en tu operación?"
               className={`${inputClass} sm:col-span-2 resize-none`}
             />
 
@@ -86,17 +87,17 @@ export function Contact() {
                 disabled={status === "sending"}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#6E9BFF] text-[#0A0A0A] font-sans text-[13px] font-medium px-7 py-3.5 rounded-[5px] hover:opacity-85 transition-opacity duration-200 disabled:opacity-50"
               >
-                {status === "sending" ? "Enviando..." : "Enviar mensaje →"}
+                {status === "sending" ? "Enviando..." : "Enviar mensaje"}
               </button>
               {status === "sent" && (
-                <span className="font-mono text-[11px] text-[#6E9BFF]">Mensaje enviado. Te respondo pronto.</span>
+                <span role="status" className="font-mono text-[11px] text-[#6E9BFF]">Mensaje enviado. Te respondo pronto.</span>
               )}
               {status === "error" && (
-                <span className="font-mono text-[11px] text-[#D97575]">Hubo un error. Probá de nuevo más tarde.</span>
+                <span role="alert" className="font-mono text-[11px] text-[#D97575]">Hubo un error. Probá de nuevo más tarde.</span>
               )}
             </div>
           </form>
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );

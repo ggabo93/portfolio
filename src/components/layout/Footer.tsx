@@ -13,7 +13,7 @@ export function Footer() {
             ggabo93@gmail.com
           </span>
         </a>
-        <p className="font-mono text-[11px] text-[#5A5A57] tracking-[0.04em]">
+        <p className="font-mono text-[11px] text-[#8C8C88] tracking-[0.04em]">
           © 2026 Gabriel González · Córdoba, Argentina
         </p>
       </div>
